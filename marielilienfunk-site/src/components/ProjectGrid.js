@@ -19,7 +19,7 @@ export default function ProjectGrid({ projects }) {
           <button
             key={tag}
             onClick={() => setActiveTag(tag)}
-            className={`px-4 py-1.5 text-sm uppercase tracking-wide border rounded-full transition-colors ${
+            className={`px-4 py-1.5 text-sm tracking-wide border rounded-full transition-colors ${
               activeTag === tag
                 ? "bg-ink text-paper border-ink"
                 : "border-black/15 text-black/60 hover:border-black/40"

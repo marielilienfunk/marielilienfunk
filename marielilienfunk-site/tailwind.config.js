@@ -12,6 +12,7 @@ module.exports = {
       },
       fontFamily: {
         serif: ["Georgia", "Times New Roman", "serif"],
+        sans: ["var(--font-noto)", "Helvetica", "Arial", "sans-serif"],
       },
     },
   },

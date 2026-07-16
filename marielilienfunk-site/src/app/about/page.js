@@ -22,7 +22,7 @@ const DISCIPLINES = [
 export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="font-serif text-3xl mb-6">About</h1>
+      <h1 className="font-sans font-medium text-3xl mb-6">About</h1>
       <p className="text-black/70 mb-10 leading-relaxed">
         Ich bin eine multidisziplinäre Designerin mit Fokus auf Art Direction,
         Fotografie und Film. Mit einem neugierigen und offenen Blick gehe ich
@@ -31,19 +31,19 @@ export default function AboutPage() {
         über alle Formate hinweg.
       </p>
 
-      <h2 className="text-sm uppercase tracking-widest text-black/50 mb-4">
+      <h2 className="text-sm tracking-widest text-black/50 mb-4">
         Disziplinen
       </h2>
       <div className="grid sm:grid-cols-2 gap-6 mb-12">
         {DISCIPLINES.map((d) => (
           <div key={d.name}>
-            <h3 className="font-serif text-lg mb-1">{d.name}</h3>
+            <h3 className="font-sans font-medium text-lg mb-1">{d.name}</h3>
             <p className="text-black/60 text-sm leading-relaxed">{d.text}</p>
           </div>
         ))}
       </div>
 
-      <h2 className="text-sm uppercase tracking-widest text-black/50 mb-4">
+      <h2 className="text-sm tracking-widest text-black/50 mb-4">
         Arbeitsweise
       </h2>
       <p className="text-black/70 leading-relaxed">

@@ -145,8 +145,22 @@ export const projects = [
   },
 ];
 
+// Projekt-Detailseiten brauchen etwas mehr Inhalt als die Grid-Ansicht
+// (Overview-Text, Leistungen, mehrere Bilder). Statt das bei allen Projekten
+// oben von Hand zu pflegen, werden fehlende Felder hier automatisch aus den
+// vorhandenen Daten abgeleitet — trag bei einem Projekt "overview", "services"
+// oder "gallery" ein, sobald du echten Content dafür hast, und der Platzhalter
+// wird automatisch ersetzt.
 export function getProjectBySlug(slug) {
-  return projects.find((p) => p.slug === slug);
+  const project = projects.find((p) => p.slug === slug);
+  if (!project) return undefined;
+
+  return {
+    ...project,
+    overview: project.overview || project.role,
+    services: project.services || project.tags,
+    gallery: project.gallery || [project.cover, project.cover, project.cover],
+  };
 }
 
 // Automatisch aus allen vorkommenden Tags gebildet — wächst mit, sobald du

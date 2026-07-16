@@ -14,7 +14,7 @@ export default function ProjectCard({ project }) {
         />
       </div>
       <div className="mt-3 flex items-baseline justify-between gap-3">
-        <h3 className="font-serif text-base">{project.title}</h3>
+        <h3 className="font-sans font-medium text-base">{project.title}</h3>
       </div>
       <p className="text-sm text-black/50 mt-0.5">{project.tags.join(" · ")}</p>
     </Link>

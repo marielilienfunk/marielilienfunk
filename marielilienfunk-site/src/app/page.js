@@ -19,7 +19,7 @@ export default function HomePage() {
             className="object-cover"
           />
         </div>
-        <p className="font-serif text-xl sm:text-2xl max-w-2xl leading-snug">
+        <p className="font-sans font-light text-xl sm:text-2xl max-w-2xl leading-snug">
           Ich entwickle visuelle Identitäten für Marken — von Art Direction und
           Design über Fotografie bis Film. Eine Handschrift, konsequent über
           alle Formate hinweg.
@@ -33,10 +33,10 @@ export default function HomePage() {
 
       {/* Selected clients */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
-        <h2 className="text-sm uppercase tracking-widest text-black/50 mb-6">
+        <h2 className="text-sm tracking-widest text-black/50 mb-6">
           Selected Clients
         </h2>
-        <div className="flex flex-wrap gap-x-10 gap-y-3 font-serif text-lg text-black/70">
+        <div className="flex flex-wrap gap-x-10 gap-y-3 font-sans font-light text-lg text-black/70">
           {CLIENTS.map((c) => (
             <span key={c}>{c}</span>
           ))}
@@ -46,10 +46,10 @@ export default function HomePage() {
       {/* Contact CTA */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
         <div className="border-t border-black/10 pt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <p className="font-serif text-lg">Lust auf ein gemeinsames Projekt?</p>
+          <p className="font-sans font-light text-lg">Lust auf ein gemeinsames Projekt?</p>
           <Link
             href="/contact"
-            className="inline-block px-5 py-2.5 bg-ink text-paper text-sm uppercase tracking-wide"
+            className="inline-block px-5 py-2.5 bg-ink text-paper text-sm tracking-wide"
           >
             Kontakt aufnehmen
           </Link>
