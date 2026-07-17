@@ -13,6 +13,9 @@ export const projects = [
     title: "Chop Chop Bloom",
     client: "Chop Chop Bloom",
     role: "Art Direction & Photography für die Markenkampagne.",
+    statement: "What if gardening were sexy?",
+    overview:
+      "Chop Chop Bloom is an luxurious urban gardening brand, selling high quality secateurs. The idea of the brand is to give gardening a fashionable twist and enhance its fun and playful sides, while being extraordinarily chic doing so.",
     tags: ["Design & Branding", "Fotografie"],
     cover:
       "https://static.wixstatic.com/media/a138c8_50869fc9c53e45999969921c1dda21a8~mv2.jpg/v1/fit/w_960,h_722,q_90/a138c8_50869fc9c53e45999969921c1dda21a8~mv2.jpg",
@@ -157,6 +160,7 @@ export function getProjectBySlug(slug) {
 
   return {
     ...project,
+    statement: project.statement || `${project.title} ${project.role}`,
     overview: project.overview || project.role,
     services: project.services || project.tags,
     gallery: project.gallery || [project.cover, project.cover, project.cover],
