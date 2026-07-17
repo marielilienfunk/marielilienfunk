@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { projects } from "@/data/projects";
 import ProjectGrid from "@/components/ProjectGrid";
+import SkillsCarousel from "@/components/SkillsCarousel";
 
 const CLIENTS = ["Chop Chop Bloom", "Jolou Studio", "Irma's World", "Chateau de Brantes"];
 
@@ -28,6 +29,12 @@ export default function HomePage() {
       {/* Portfolio */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <ProjectGrid projects={projects} />
+      </section>
+
+      {/* Skills */}
+      <section className="max-w-6xl mx-auto px-6 pb-20">
+        <h2 className="text-sm tracking-widest text-black/50 mb-6">Skills</h2>
+        <SkillsCarousel />
       </section>
 
       {/* Selected clients */}
