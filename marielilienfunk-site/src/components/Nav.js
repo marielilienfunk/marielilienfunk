@@ -11,11 +11,11 @@ export default function Nav() {
           <Link href="/" className="hover:text-accent transition-colors">
             Work
           </Link>
+          <Link href="/playground" className="hover:text-accent transition-colors">
+            Playground
+          </Link>
           <Link href="/about" className="hover:text-accent transition-colors">
             About
-          </Link>
-          <Link href="/contact" className="hover:text-accent transition-colors">
-            Kontakt
           </Link>
         </nav>
       </div>
