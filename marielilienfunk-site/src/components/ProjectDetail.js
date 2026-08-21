@@ -16,7 +16,6 @@ function GalleryVideo({ src }) {
         muted
         loop
         playsInline
-        controls
       />
     </Reveal>
   );
