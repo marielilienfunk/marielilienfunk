@@ -48,20 +48,22 @@ export default function ProjectDetail({ project, next }) {
   return (
     <article>
       {/* Cover image */}
-      <motion.div
-        initial={{ opacity: 0, scale: 1.03 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/5"
-      >
-        <Image
-          src={project.cover}
-          alt={project.title}
-          fill
-          priority
-          className="object-cover"
-        />
-      </motion.div>
+      <div className="max-w-6xl mx-auto px-6 pt-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/5"
+        >
+          <Image
+            src={project.cover}
+            alt={project.title}
+            fill
+            priority
+            className="object-cover"
+          />
+        </motion.div>
+      </div>
 
       {/* Statement heading */}
       <section className="max-w-6xl mx-auto px-6 pt-20">
