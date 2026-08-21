@@ -13,7 +13,7 @@ export default function ProjectDetail({ project, next }) {
         initial={{ opacity: 0, scale: 1.03 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="relative aspect-[16/10] w-full overflow-hidden bg-black/5"
+        className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/5"
       >
         <Image
           src={project.cover}
@@ -62,7 +62,7 @@ export default function ProjectDetail({ project, next }) {
       <section className="max-w-6xl mx-auto px-6 pb-20 flex flex-col gap-6">
         {project.gallery.map((src, i) => (
           <Reveal key={`${src}-${i}`} y={40}>
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/5">
               <Image
                 src={src}
                 alt={`${project.title} — Bild ${i + 1}`}
