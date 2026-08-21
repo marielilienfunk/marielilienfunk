@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function ProjectCard({ project }) {
   return (
     <Link href={`/projects/${project.slug}`} className="group block">
-      <div className="relative aspect-[4/3] overflow-hidden bg-black/5">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-black/5">
         <Image
           src={project.cover}
           alt={project.title}

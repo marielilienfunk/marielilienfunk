@@ -10,7 +10,7 @@ export default function HomePage() {
     <div>
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-14">
-        <div className="relative aspect-[16/8] w-full overflow-hidden bg-black/5 mb-10">
+        <div className="relative aspect-[16/8] w-full overflow-hidden rounded-2xl bg-black/5 mb-10">
           <Image
             src={projects[0].cover}
             alt={projects[0].title}
