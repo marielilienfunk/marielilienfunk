@@ -1,9 +1,49 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
+
+function GalleryVideo({ src }) {
+  return (
+    <Reveal y={40} className="col-span-2">
+      <video
+        src={src}
+        className="w-full h-auto rounded-2xl"
+        autoPlay
+        muted
+        loop
+        playsInline
+        controls
+      />
+    </Reveal>
+  );
+}
+
+function GalleryImage({ src, alt }) {
+  const [isLandscape, setIsLandscape] = useState(false);
+
+  const checkOrientation = (img) => {
+    if (img && img.naturalWidth && img.naturalHeight) {
+      setIsLandscape(img.naturalWidth > img.naturalHeight);
+    }
+  };
+
+  return (
+    <Reveal y={40} className={isLandscape ? "col-span-2" : undefined}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        ref={(img) => img?.complete && checkOrientation(img)}
+        src={src}
+        alt={alt}
+        onLoad={(e) => checkOrientation(e.currentTarget)}
+        className="w-full h-auto rounded-2xl"
+      />
+    </Reveal>
+  );
+}
 
 export default function ProjectDetail({ project, next }) {
   return (
@@ -65,16 +105,17 @@ export default function ProjectDetail({ project, next }) {
 
       {/* Gallery */}
       <section className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-2 gap-4 sm:gap-6">
-        {project.gallery.map((src, i) => (
-          <Reveal key={`${src}-${i}`} y={40}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={src}
+        {project.gallery.map((item, i) =>
+          typeof item === "object" && item.video ? (
+            <GalleryVideo key={`video-${i}`} src={item.video} />
+          ) : (
+            <GalleryImage
+              key={`${item}-${i}`}
+              src={item}
               alt={`${project.title} — Bild ${i + 1}`}
-              className="w-full h-auto rounded-2xl"
             />
-          </Reveal>
-        ))}
+          )
+        )}
       </section>
 
       {/* Next project / back */}
