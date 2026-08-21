@@ -9,6 +9,33 @@
 
 export const projects = [
   {
+    slug: "didamie",
+    title: "Didamie — Debut Collection",
+    client: "Didamie",
+    role: "Fotografie für die Debütkollektion.",
+    statement: "Didamie",
+    subtitle: "Photography",
+    services: ["Photography"],
+    tags: ["Fotografie"],
+    cover: "/images/didamie/didamie.jpg",
+    gallery: [
+      "/images/didamie/didamie2.jpg",
+      "/images/didamie/didamie3.jpg",
+      "/images/didamie/didamie4.jpg",
+      "/images/didamie/didamie5.jpg",
+      "/images/didamie/didamie6.jpg",
+      "/images/didamie/didamie7.jpg",
+      "/images/didamie/didamie8.jpg",
+      "/images/didamie/didamie9.jpg",
+      "/images/didamie/didamie10.jpg",
+      "/images/didamie/didamie11.jpg",
+      "/images/didamie/didamie12.jpg",
+      "/images/didamie/didamie13.jpg",
+      "/images/didamie/didamie14.jpg",
+      "/images/didamie/didamie15.jpg",
+    ],
+  },
+  {
     slug: "chop-chop-bloom",
     title: "Chop Chop Bloom",
     client: "Chop Chop Bloom",

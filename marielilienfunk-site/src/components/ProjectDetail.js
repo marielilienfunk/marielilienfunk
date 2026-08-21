@@ -30,6 +30,11 @@ export default function ProjectDetail({ project, next }) {
           <h2 className="font-sans font-light text-3xl sm:text-5xl leading-snug max-w-4xl text-ink">
             {project.statement}
           </h2>
+          {project.subtitle && (
+            <p className="font-sans font-light text-xl sm:text-2xl mt-2 text-black/40">
+              {project.subtitle}
+            </p>
+          )}
         </Reveal>
       </section>
 
@@ -59,17 +64,15 @@ export default function ProjectDetail({ project, next }) {
       </section>
 
       {/* Gallery */}
-      <section className="max-w-6xl mx-auto px-6 pb-20 flex flex-col gap-6">
+      <section className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-2 gap-4 sm:gap-6">
         {project.gallery.map((src, i) => (
           <Reveal key={`${src}-${i}`} y={40}>
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/5">
-              <Image
-                src={src}
-                alt={`${project.title} — Bild ${i + 1}`}
-                fill
-                className="object-cover"
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={`${project.title} — Bild ${i + 1}`}
+              className="w-full h-auto rounded-2xl"
+            />
           </Reveal>
         ))}
       </section>
