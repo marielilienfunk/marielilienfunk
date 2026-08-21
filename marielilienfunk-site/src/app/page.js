@@ -20,9 +20,11 @@ export default function HomePage() {
           />
         </div>
         <p className="font-sans font-light text-xl sm:text-2xl max-w-2xl leading-snug">
-          Ich entwickle visuelle Identitäten für Marken — von Art Direction und
-          Design über Fotografie bis Film. Eine Handschrift, konsequent über
-          alle Formate hinweg.
+          I am a multidisciplinary designer specialised in Art Direction,
+          Photography &amp; Film. With a curious and open mind I gain
+          insights into the worlds around me, creating authentic and
+          compelling stories for my clients their brands &amp; their
+          products.
         </p>
       </section>
 
