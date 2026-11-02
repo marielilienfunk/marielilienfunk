@@ -55,13 +55,15 @@ export default function ProjectDetail({ project, next }) {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/5"
         >
-          <Image
-            src={project.cover}
-            alt={project.title}
-            fill
-            priority
-            className="object-cover"
-          />
+          {project.cover && (
+            <Image
+              src={project.cover}
+              alt={project.title}
+              fill
+              priority
+              className="object-cover"
+            />
+          )}
         </motion.div>
       </div>
 
@@ -82,9 +84,11 @@ export default function ProjectDetail({ project, next }) {
       {/* Services & Overview */}
       <section className="max-w-6xl mx-auto px-6 py-20 grid sm:grid-cols-2 gap-12">
         <Reveal>
-          <h2 className="text-sm tracking-widest text-black/40 mb-4">
-            Services
-          </h2>
+          {project.services.length > 0 && (
+            <h2 className="text-sm tracking-widest text-black/40 mb-4">
+              Services
+            </h2>
+          )}
           <div className="flex flex-wrap gap-2">
             {project.services.map((service) => (
               <span

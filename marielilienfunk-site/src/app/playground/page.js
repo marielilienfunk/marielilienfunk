@@ -6,7 +6,7 @@ export const metadata = { title: "Playground — Marie-Lilien Funk" };
 // Platzhalter: zeigt vorerst die vorhandenen Projektbilder. Sobald du eigene
 // Playground-Fotos hast, hier einfach ein eigenes Array mit Bild-URLs
 // eintragen und PlaygroundGallery damit füttern.
-const images = projects.map((p) => p.cover);
+const images = projects.map((p) => p.cover).filter(Boolean);
 
 export default function PlaygroundPage() {
   return (

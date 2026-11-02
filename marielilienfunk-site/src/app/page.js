@@ -3,6 +3,7 @@ import { projects } from "@/data/projects";
 import ProjectGrid from "@/components/ProjectGrid";
 import SkillsCarousel from "@/components/SkillsCarousel";
 
+const heroProject = projects.find((p) => p.slug === "didamie");
 const CLIENTS = ["Chop Chop Bloom", "Jolou Studio", "Irma's World", "Chateau de Brantes"];
 
 export default function HomePage() {
@@ -12,8 +13,8 @@ export default function HomePage() {
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-14">
         <div className="relative aspect-[16/8] w-full overflow-hidden rounded-2xl bg-black/5 mb-10">
           <Image
-            src={projects[0].cover}
-            alt={projects[0].title}
+            src={heroProject.cover}
+            alt={heroProject.title}
             fill
             priority
             className="object-cover"
