@@ -65,7 +65,7 @@ function GalleryVideo({ src, portrait }) {
   );
 }
 
-function GalleryImage({ src, alt }) {
+function GalleryImage({ src, alt, portrait }) {
   const [isLandscape, setIsLandscape] = useState(false);
 
   const checkOrientation = (img) => {
@@ -82,7 +82,9 @@ function GalleryImage({ src, alt }) {
         src={src}
         alt={alt}
         onLoad={(e) => checkOrientation(e.currentTarget)}
-        className="w-full h-auto rounded-2xl"
+        className={`w-full rounded-2xl ${
+          portrait ? "aspect-[4/5] object-cover" : "h-auto"
+        }`}
       />
     </Reveal>
   );
@@ -163,8 +165,9 @@ export default function ProjectDetail({ project, next }) {
             />
           ) : (
             <GalleryImage
-              key={`${item}-${i}`}
-              src={item}
+              key={`image-${i}`}
+              src={item.image || item}
+              portrait={item.portrait}
               alt={`${project.title} — Bild ${i + 1}`}
             />
           )

@@ -16,9 +16,10 @@ export const projects = [
     gallery: [
       { video: "/images/cosia/cosia-video-1.mp4" },
       { video: "/images/cosia/cosia-video-2.mp4" },
-      { video: "/images/cosia/cosia-video-4.mp4", portrait: true },
       { video: "/images/cosia/cosia-video-3.mp4", portrait: true },
+      { image: "/images/cosia/cosia-app-mockup.jpg", portrait: true },
       "/images/cosia/cosia-app-icon.jpg",
+      { video: "/images/cosia/cosia-video-4.mp4", portrait: true },
     ],
   },
   {
