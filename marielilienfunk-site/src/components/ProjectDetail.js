@@ -8,11 +8,20 @@ import Reveal from "@/components/Reveal";
 
 function GalleryVideo({ src, portrait }) {
   const videoRef = useRef(null);
+  const [asImage, setAsImage] = useState(false);
 
-  // Autoplay zusätzlich per Code starten. Im iOS-Stromsparmodus blockiert
-  // Safari das, dann startet das Video bei der ersten Berührung der Seite.
+  // Safari legt bei blockiertem Autoplay einen Playbutton über <video>. Als
+  // <img> spielt Safari MP4s ohne Button in Dauerschleife ab.
+  useEffect(() => {
+    setAsImage(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+  }, []);
+
+  // Autoplay zusätzlich per Code starten. Falls der Browser das blockiert,
+  // startet das Video bei der ersten Berührung der Seite.
   useEffect(() => {
     const video = videoRef.current;
+    if (!video) return;
+
     const play = () => {
       video.muted = true;
       video.play().catch(() => {});
@@ -25,21 +34,33 @@ function GalleryVideo({ src, portrait }) {
       document.removeEventListener("touchend", play);
       document.removeEventListener("click", play);
     };
-  }, []);
+  }, [asImage]);
+
+  const className = `w-full rounded-2xl ${
+    portrait ? "aspect-[4/5] object-cover" : "h-auto"
+  }`;
 
   return (
     <Reveal y={40} className={portrait ? undefined : "col-span-2"}>
-      <video
-        ref={videoRef}
-        src={src}
-        className={`w-full rounded-2xl ${
-          portrait ? "aspect-[4/5] object-cover" : "h-auto"
-        }`}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+      {asImage ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt=""
+          className={className}
+          onError={() => setAsImage(false)}
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          src={src}
+          className={className}
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+      )}
     </Reveal>
   );
 }
