@@ -8,13 +8,12 @@ import Reveal from "@/components/Reveal";
 
 function GalleryVideo({ src, portrait }) {
   return (
-    <Reveal
-      y={40}
-      className={portrait ? "col-span-2 w-full max-w-xl mx-auto" : "col-span-2"}
-    >
+    <Reveal y={40} className={portrait ? undefined : "col-span-2"}>
       <video
         src={src}
-        className="w-full h-auto rounded-2xl"
+        className={`w-full rounded-2xl ${
+          portrait ? "aspect-[4/5] object-cover" : "h-auto"
+        }`}
         autoPlay
         muted
         loop
