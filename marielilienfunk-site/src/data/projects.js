@@ -12,6 +12,12 @@ export const projects = [
     slug: "cosia",
     title: "Cosia",
     tags: [],
+    cover: "/images/cosia/cosia-cover.jpg",
+    gallery: [
+      { video: "/images/cosia/cosia-video-1.mp4" },
+      { video: "/images/cosia/cosia-video-2.mp4" },
+      { video: "/images/cosia/cosia-video-3.mp4", portrait: true },
+    ],
   },
   {
     slug: "around-around",

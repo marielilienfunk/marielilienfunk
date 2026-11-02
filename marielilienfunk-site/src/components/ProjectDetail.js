@@ -6,9 +6,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 
-function GalleryVideo({ src }) {
+function GalleryVideo({ src, portrait }) {
   return (
-    <Reveal y={40} className="col-span-2">
+    <Reveal
+      y={40}
+      className={portrait ? "col-span-2 w-full max-w-xl mx-auto" : "col-span-2"}
+    >
       <video
         src={src}
         className="w-full h-auto rounded-2xl"
@@ -112,7 +115,11 @@ export default function ProjectDetail({ project, next }) {
       <section className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-2 gap-4 sm:gap-6">
         {project.gallery.map((item, i) =>
           typeof item === "object" && item.video ? (
-            <GalleryVideo key={`video-${i}`} src={item.video} />
+            <GalleryVideo
+              key={`video-${i}`}
+              src={item.video}
+              portrait={item.portrait}
+            />
           ) : (
             <GalleryImage
               key={`${item}-${i}`}
