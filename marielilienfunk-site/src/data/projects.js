@@ -19,6 +19,7 @@ export const projects = [
       { video: "/images/cosia/cosia-video-3.mp4", portrait: true },
       { image: "/images/cosia/cosia-app-mockup.jpg", portrait: true },
       "/images/cosia/cosia-app-icon.jpg",
+      { video: "/images/cosia/cosia-scroll-karussell.mp4", portrait: true },
       { video: "/images/cosia/cosia-video-4.mp4", portrait: true },
     ],
   },
