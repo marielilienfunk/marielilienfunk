@@ -1,15 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 
 function GalleryVideo({ src, portrait }) {
+  const videoRef = useRef(null);
+
+  // Autoplay zusätzlich per Code starten. Im iOS-Stromsparmodus blockiert
+  // Safari das, dann startet das Video bei der ersten Berührung der Seite.
+  useEffect(() => {
+    const video = videoRef.current;
+    const play = () => {
+      video.muted = true;
+      video.play().catch(() => {});
+    };
+
+    play();
+    document.addEventListener("touchend", play, { passive: true });
+    document.addEventListener("click", play);
+    return () => {
+      document.removeEventListener("touchend", play);
+      document.removeEventListener("click", play);
+    };
+  }, []);
+
   return (
     <Reveal y={40} className={portrait ? undefined : "col-span-2"}>
       <video
+        ref={videoRef}
         src={src}
         className={`w-full rounded-2xl ${
           portrait ? "aspect-[4/5] object-cover" : "h-auto"
