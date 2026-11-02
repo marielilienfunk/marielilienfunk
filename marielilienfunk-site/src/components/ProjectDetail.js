@@ -6,14 +6,31 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 
-function GalleryVideo({ src, portrait }) {
+function GalleryVideo({ src, portrait, ratio }) {
+  const containerRef = useRef(null);
   const videoRef = useRef(null);
   const [asImage, setAsImage] = useState(false);
+  const [isNear, setIsNear] = useState(false);
 
   // Safari legt bei blockiertem Autoplay einen Playbutton über <video>. Als
   // <img> spielt Safari MP4s ohne Button in Dauerschleife ab.
   useEffect(() => {
     setAsImage(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+  }, []);
+
+  // Videos erst kurz vor dem Sichtbereich laden, damit die Seite schnell öffnet.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNear(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
   }, []);
 
   // Autoplay zusätzlich per Code starten. Falls der Browser das blockiert,
@@ -34,33 +51,40 @@ function GalleryVideo({ src, portrait }) {
       document.removeEventListener("touchend", play);
       document.removeEventListener("click", play);
     };
-  }, [asImage]);
+  }, [asImage, isNear]);
 
-  const className = `w-full rounded-2xl ${
-    portrait ? "aspect-[4/5] object-cover" : "h-auto"
-  }`;
+  const className = "w-full h-full object-cover";
 
   return (
     <Reveal y={40} className={portrait ? undefined : "col-span-2"}>
-      {asImage ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt=""
-          className={className}
-          onError={() => setAsImage(false)}
-        />
-      ) : (
-        <video
-          ref={videoRef}
-          src={src}
-          className={className}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-      )}
+      <div
+        ref={containerRef}
+        className={`overflow-hidden rounded-2xl bg-black/5 ${
+          portrait ? "aspect-[4/5]" : ""
+        }`}
+        style={portrait ? undefined : { aspectRatio: ratio }}
+      >
+        {isNear &&
+          (asImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt=""
+              className={className}
+              onError={() => setAsImage(false)}
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              src={src}
+              className={className}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ))}
+      </div>
     </Reveal>
   );
 }
@@ -162,6 +186,7 @@ export default function ProjectDetail({ project, next }) {
               key={`video-${i}`}
               src={item.video}
               portrait={item.portrait}
+              ratio={item.ratio}
             />
           ) : (
             <GalleryImage

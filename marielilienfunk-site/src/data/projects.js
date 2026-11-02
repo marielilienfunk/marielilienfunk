@@ -16,11 +16,11 @@ export const projects = [
     gallery: [
       { video: "/images/cosia/cosia-video-3.mp4", portrait: true },
       { image: "/images/cosia/cosia-app-mockup.jpg", portrait: true },
-      { video: "/images/cosia/cosia-video-1.mp4" },
+      { video: "/images/cosia/cosia-video-1.mp4", ratio: "1926 / 1080" },
       { video: "/images/cosia/cosia-scroll-karussell.mp4", portrait: true },
       { video: "/images/cosia/cosia-video-4.mp4", portrait: true },
       "/images/cosia/cosia-app-icon.jpg",
-      { video: "/images/cosia/cosia-video-2.mp4" },
+      { video: "/images/cosia/cosia-video-2.mp4", ratio: "1700 / 1080" },
     ],
   },
   {
@@ -50,7 +50,7 @@ export const projects = [
     gallery: [
       "/images/didamie/didamie-01.jpg",
       "/images/didamie/didamie-02.jpg",
-      { video: "/images/didamie/didamie-video.mp4" },
+      { video: "/images/didamie/didamie-video.mp4", ratio: "1920 / 1080" },
       "/images/didamie/didamie-04.jpg",
       "/images/didamie/didamie-05.jpg",
       "/images/didamie/didamie-06.jpg",
