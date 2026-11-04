@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal";
 
 function GalleryVideo({ src, portrait, ratio }) {
@@ -117,28 +115,8 @@ function GalleryImage({ src, alt, portrait }) {
 export default function ProjectDetail({ project, next }) {
   return (
     <article>
-      {/* Cover image */}
-      <div className="max-w-6xl mx-auto px-6 pt-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 1.03 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/5"
-        >
-          {project.cover && (
-            <Image
-              src={project.cover}
-              alt={project.title}
-              fill
-              priority
-              className="object-cover"
-            />
-          )}
-        </motion.div>
-      </div>
-
       {/* Statement heading */}
-      <section className="max-w-6xl mx-auto px-6 pt-20">
+      <section className="max-w-6xl mx-auto px-6 pt-16">
         <Reveal>
           <h2 className="font-sans font-light text-3xl sm:text-5xl leading-snug max-w-4xl text-ink">
             {project.statement}
