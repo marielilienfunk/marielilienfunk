@@ -36,6 +36,11 @@ export const projects = [
     slug: "cocktail-x-festival",
     title: "Cocktail X Festival",
     tags: [],
+    cover: "/images/cocktail-x/cocktail-x-cover.jpg",
+    gallery: [
+      { video: "/images/cocktail-x/cocktail-x-teaser.mp4", portrait: true },
+      { video: "/images/cocktail-x/cocktail-x-tags-to-map.mp4", portrait: true },
+    ],
   },
   {
     slug: "didamie",
