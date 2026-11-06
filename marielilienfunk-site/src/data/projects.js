@@ -42,6 +42,7 @@ export const projects = [
       { video: "/images/cocktail-x/cocktail-x-tags-to-map.mp4", portrait: true },
       "/images/cocktail-x/cocktail-x-menu-karten.jpg",
       { video: "/images/cocktail-x/cocktail-x-carousel.mp4", portrait: true },
+      { video: "/images/cocktail-x/cocktail-x-farbpalette-grid.mp4", portrait: true },
     ],
   },
   {
