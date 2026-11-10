@@ -18,3 +18,24 @@ video::-webkit-media-controls-start-playback-button {
   display: none !important;
   -webkit-appearance: none;
 }
+
+/* Logo: farbige i-Punkte springen beim Hovern */
+.logo-dot {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+a:hover .logo-dot,
+a:focus-visible .logo-dot {
+  animation: logo-dot-hop 0.7s cubic-bezier(0.3, 0, 0.3, 1) both;
+}
+@keyframes logo-dot-hop {
+  0%   { transform: translateY(0) scale(1, 1); }
+  12%  { transform: translateY(0) scale(1.25, 0.75); }
+  45%  { transform: translateY(-24px) scale(0.9, 1.12); }
+  75%  { transform: translateY(0) scale(1.3, 0.7); }
+  88%  { transform: translateY(-5px) scale(0.95, 1.05); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  a:hover .logo-dot, a:focus-visible .logo-dot { animation: none; }
+}
