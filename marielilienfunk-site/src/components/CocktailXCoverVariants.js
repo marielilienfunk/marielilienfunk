@@ -165,21 +165,21 @@ export function CoverPattern() {
 
 /* ---------- D: Stern wird zum Icon ---------- */
 const MORPHS = [
-  { shape: "star", fg: "#fff" },
+  { shape: "star", fg: "#0d0d0d" },
   { shape: "circle", fg: C.everglade },
   { shape: "star", fg: C.tangerine },
   { shape: "hourglass", fg: C.hibiscus },
   { shape: "ring", fg: C.bay },
   { shape: "diamond", fg: C.jambalaya },
-  { shape: "half", fg: C.cream },
+  { shape: "half", fg: C.hibiscus },
 ];
 
 export function CoverMorph() {
   const n = useTick(1300);
   const m = MORPHS[n % MORPHS.length];
   return (
-    <Frame bg="#0d0d0d">
-      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#fff" }}>
+    <Frame bg="#fff">
+      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#0d0d0d" }}>
         <Wordmark
           color="currentColor"
           size="11cqw"
