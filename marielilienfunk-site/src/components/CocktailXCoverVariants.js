@@ -293,7 +293,7 @@ export function CoverCircles() {
     setRots((prev) =>
       prev.map((r, i) =>
         pick.has(i)
-          ? { deg: r.deg + rand([-1, 1]) * rand([90, 180, 270, 360]), dur: 700 + Math.random() * 1300 }
+          ? { deg: r.deg + rand([-1, 1]) * rand([360, 360, 720]), dur: 1000 + Math.random() * 1200 }
           : r
       )
     );
