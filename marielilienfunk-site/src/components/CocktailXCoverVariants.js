@@ -202,9 +202,12 @@ export function CoverMorph() {
 }
 
 /* ---------- E: Icons poppen groß im Hintergrund ---------- */
-const POP_COLORS = [C.tangerine, C.everglade, C.bay, C.hibiscus, C.jambalaya];
+const POP_COLORS = [C.tangerine, C.everglade, C.bay, C.hibiscus, C.jambalaya, C.cream];
 const POP_SPOTS = [
-  [14, 22], [86, 22], [14, 78], [86, 78], [50, 6], [50, 94], [30, 90], [70, 10], [6, 50], [94, 50],
+  // Raster aus 10 Plätzen rund ums Logo – bei 20cqw Icongröße überlappt nichts
+  [13, 18], [37.7, 18], [62.3, 18], [87, 18],
+  [13, 50], [87, 50],
+  [13, 82], [37.7, 82], [62.3, 82], [87, 82],
 ];
 
 export function CoverPop() {
@@ -214,27 +217,27 @@ export function CoverPop() {
     if (!n) return;
     setItems((prev) => {
       const live = prev.filter((p) => !p.out);
-      const used = new Set(live.map((p) => p.spot));
+      const used = new Set(prev.map((p) => p.spot));
       const free = POP_SPOTS.map((_, i) => i).filter((i) => !used.has(i));
       const spot = rand(free);
       const next = {
         key: n,
         spot,
-        shape: rand(SHAPES),
-        color: rand(POP_COLORS),
-        size: 30 + Math.random() * 16,
-        rot: rand([0, 45, 90, -45]),
+        shape: rand(SHAPES.filter((x) => !live.some((p) => p.shape === x))),
+        color: rand(POP_COLORS.filter((x) => !live.some((p) => p.color === x))),
+        size: 20,
+        rot: rand([0, 90, 180, 270]),
       };
       // ältestes sichtbares Icon raus, sobald mehr als 3 da sind
       const marked = live.length >= 3
-        ? prev.map((p) => (p === live[0] ? { ...p, out: true } : p))
+        ? prev.map((p) => (p === live[0] ? { ...p, out: true, outAt: n } : p))
         : prev;
-      return [...marked.filter((p) => !p.out || p.key > n - 2), next];
+      return [...marked.filter((p) => !p.out || p.outAt >= n - 1), next];
     });
   }, [n]);
 
   return (
-    <Frame bg="#fff">
+    <Frame bg="#0d0d0d">
       {items.map((p) => {
         const [x, y] = POP_SPOTS[p.spot];
         return (
@@ -253,7 +256,7 @@ export function CoverPop() {
           </div>
         );
       })}
-      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#0d0d0d" }}>
+      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#fff" }}>
         <Wordmark color="currentColor" size="8cqw" />
       </div>
       <style>{`
