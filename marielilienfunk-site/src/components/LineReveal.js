@@ -67,7 +67,7 @@ export default function LineReveal({ text, className = "" }) {
     <p ref={ref} className={className}>
       {lines
         ? lines.map((line, i) => (
-            <span key={i} data-line className="block origin-left" style={{ opacity: 0 }}>
+            <span key={i} data-line className="block origin-center" style={{ opacity: 0 }}>
               {line.join(" ")}
             </span>
           ))
