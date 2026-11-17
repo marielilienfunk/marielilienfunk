@@ -29,7 +29,7 @@ export const projects = [
     slug: "around-around",
     title: "Around Around",
     client: "Around Around",
-    role: "Entwicklung der visuellen Identität.",
+    role: "Development of the visual identity.",
     tags: ["Design & Branding"],
     cover:
       "https://static.wixstatic.com/media/a138c8_6908d89c67b24098be6cffe8fdd9545d~mv2.png/v1/fit/w_960,h_722,q_90/a138c8_6908d89c67b24098be6cffe8fdd9545d~mv2.png",
@@ -62,11 +62,11 @@ export const projects = [
     slug: "didamie",
     title: "Didamie",
     client: "Didamie",
-    role: "Fotografie für die Debütkollektion.",
+    role: "Photography for the debut collection.",
     statement: "Didamie",
     subtitle: "Photography",
     services: ["Photography"],
-    tags: ["Fotografie"],
+    tags: ["Photography"],
     cover: "/images/didamie/didamie-titelbild.jpg",
     gallery: [
       "/images/didamie/didamie-01.jpg",
@@ -90,11 +90,11 @@ export const projects = [
     slug: "chop-chop-bloom",
     title: "Chop Chop Bloom",
     client: "Chop Chop Bloom",
-    role: "Art Direction & Photography für die Markenkampagne.",
+    role: "Art direction & photography for the brand campaign.",
     statement: "What if gardening were sexy?",
     overview:
       "Chop Chop Bloom is an luxurious urban gardening brand, selling high quality secateurs. The idea of the brand is to give gardening a fashionable twist and enhance its fun and playful sides, while being extraordinarily chic doing so.",
-    tags: ["Design & Branding", "Fotografie"],
+    tags: ["Design & Branding", "Photography"],
     cover:
       "https://static.wixstatic.com/media/a138c8_50869fc9c53e45999969921c1dda21a8~mv2.jpg/v1/fit/w_960,h_722,q_90/a138c8_50869fc9c53e45999969921c1dda21a8~mv2.jpg",
   },
@@ -102,7 +102,7 @@ export const projects = [
     slug: "irmas-world",
     title: "Irma's World",
     client: "Irma's World",
-    role: "Editorial Design für ein Magazin-Projekt.",
+    role: "Editorial design for a magazine project.",
     tags: ["Layout Design"],
     cover:
       "https://static.wixstatic.com/media/a138c8_053a0b7fce974f9fa968a1239e2bcf04~mv2.png/v1/fit/w_960,h_722,q_90/a138c8_053a0b7fce974f9fa968a1239e2bcf04~mv2.png",
@@ -111,8 +111,8 @@ export const projects = [
     slug: "jolou-studio-vin-art",
     title: "JOLOUSTUDIO - Vin Art",
     client: "Jolou Studio",
-    role: "Art Direction & Produktion einer Produktkampagne.",
-    tags: ["Design & Branding", "Fotografie"],
+    role: "Art direction & production of a product campaign.",
+    tags: ["Design & Branding", "Photography"],
     cover:
       "https://static.wixstatic.com/media/a138c8_ff53095dbb1c4721b82065db4b108cf4~mv2.jpg/v1/fit/w_960,h_722,q_90/a138c8_ff53095dbb1c4721b82065db4b108cf4~mv2.jpg",
   },
@@ -120,8 +120,8 @@ export const projects = [
     slug: "jolou-studio-rainbow-collection",
     title: "JOLOUSTUDIO - Rainbow Collection",
     client: "Jolou Studio",
-    role: "Art Direction & Film für eine Kollektion.",
-    tags: ["Design & Branding", "Videografie"],
+    role: "Art direction & film for a collection.",
+    tags: ["Design & Branding", "Videography"],
     cover:
       "https://static.wixstatic.com/media/a138c8_006dd416138b4a60816aaf477290fd52~mv2.png/v1/fit/w_960,h_722,q_90/a138c8_006dd416138b4a60816aaf477290fd52~mv2.png",
   },
@@ -129,8 +129,8 @@ export const projects = [
     slug: "jolou-studio-valentines-day",
     title: "JOLOUSTUDIO - Valentine's Day",
     client: "Jolou Studio",
-    role: "Art Direction & Film für eine Saisonkampagne.",
-    tags: ["Design & Branding", "Videografie"],
+    role: "Art direction & film for a seasonal campaign.",
+    tags: ["Design & Branding", "Videography"],
     cover:
       "https://static.wixstatic.com/media/a138c8_7adb3d2b6fd34d6dab88a0c0556c41cb~mv2.png/v1/fit/w_600,h_480,q_90/a138c8_7adb3d2b6fd34d6dab88a0c0556c41cb~mv2.png",
   },

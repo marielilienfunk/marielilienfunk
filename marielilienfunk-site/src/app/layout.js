@@ -6,18 +6,18 @@ import ClickConfetti from "@/components/ClickConfetti";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
-  weight: ["300", "500"],
+  weight: ["300"],
   variable: "--font-noto",
 });
 export const metadata = {
-  title: "Marie-Lilien Funk — Design, Fotografie, Film",
+  title: "Marie-Lilien Funk — Design, Photography, Film",
   description:
-    "Multidisziplinäre Designerin: Art Direction, Visuelle Identität, Fotografie und Film für Marken.",
+    "Multidisciplinary designer: art direction, visual identity, photography and film for brands.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="de" className={notoSans.variable} suppressHydrationWarning>
+    <html lang="en" className={notoSans.variable} suppressHydrationWarning>
       <head>
         {/* Startseite: Header-Logo ausblenden, bevor das große Logo (HeroLogo) da ist */}
         <script

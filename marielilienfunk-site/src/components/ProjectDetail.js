@@ -186,7 +186,7 @@ export default function ProjectDetail({ project, next }) {
               key={`image-${i}`}
               src={item.image || item}
               portrait={item.portrait}
-              alt={`${project.title} — Bild ${i + 1}`}
+              alt={`${project.title} — image ${i + 1}`}
             />
           );
         })}
@@ -198,13 +198,13 @@ export default function ProjectDetail({ project, next }) {
           href="/"
           className="text-sm tracking-wide text-black/60 hover:text-accent transition-colors"
         >
-          ← Zurück zum Portfolio
+          ← Back to portfolio
         </Link>
         <Link
           href={`/projects/${next.slug}`}
           className="text-sm tracking-wide hover:text-accent transition-colors"
         >
-          Nächstes Projekt: {next.title} →
+          Next project: {next.title} →
         </Link>
       </footer>
     </article>

@@ -11,7 +11,7 @@ const images = projects.map((p) => p.cover).filter(Boolean);
 export default function PlaygroundPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
-      <h1 className="font-sans font-medium text-3xl mb-10">Playground</h1>
+      <h1 className="font-sans font-light text-3xl mb-10">Playground</h1>
       <PlaygroundGallery images={images} />
     </div>
   );

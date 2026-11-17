@@ -16,7 +16,7 @@ const SKILLS = [
   {
     name: "Art Direction",
     description:
-      "Konzeption und visuelle Führung von Kampagnen, Bildwelten und Markenauftritten.",
+      "Concept and visual direction for campaigns, imagery and brand presence.",
     icon: (
       <svg {...ICON_PROPS}>
         <circle cx="24" cy="24" r="16" />
@@ -26,9 +26,9 @@ const SKILLS = [
     ),
   },
   {
-    name: "Fotografie",
+    name: "Photography",
     description:
-      "Editorial-, Produkt- und Portraitfotografie für Kampagnen und Publikationen.",
+      "Editorial, product and portrait photography for campaigns and publications.",
     icon: (
       <svg {...ICON_PROPS}>
         <rect x="6" y="14" width="36" height="24" rx="3" />
@@ -38,9 +38,9 @@ const SKILLS = [
     ),
   },
   {
-    name: "Videografie",
+    name: "Videography",
     description:
-      "Kurzfilme und Kampagnenfilme, konzipiert und produziert im gleichen visuellen System.",
+      "Short films and campaign films, conceived and produced within the same visual system.",
     icon: (
       <svg {...ICON_PROPS}>
         <rect x="6" y="12" width="26" height="24" rx="3" />
@@ -51,7 +51,7 @@ const SKILLS = [
   {
     name: "Design & Branding",
     description:
-      "Visuelle Identität, Art Direction und Markenstrategie — von der Idee bis zum fertigen System.",
+      "Visual identity, art direction and brand strategy — from the first idea to the finished system.",
     icon: (
       <svg {...ICON_PROPS}>
         <path d="M24 6C13 6 6 13 6 22c0 6 4 8 8 8h2a3 3 0 0 1 3 3v3c0 3 2 5 5 5 11 0 20-9 20-19S35 6 24 6z" />
@@ -63,7 +63,7 @@ const SKILLS = [
   },
   {
     name: "Layout Design",
-    description: "Editorial- und Print-Layouts für Magazine und Publikationen.",
+    description: "Editorial and print layouts for magazines and publications.",
     icon: (
       <svg {...ICON_PROPS}>
         <rect x="6" y="8" width="36" height="32" rx="2" />
@@ -74,7 +74,7 @@ const SKILLS = [
   {
     name: "Creative Direction",
     description:
-      "Übergreifende kreative Leitung über Teams, Formate und Disziplinen hinweg.",
+      "Overall creative lead across teams, formats and disciplines.",
     icon: (
       <svg {...ICON_PROPS}>
         <path d="M24 6c7 0 12 5 12 11 0 5-3 7-4 10-1 2-1 3-1 5H17c0-2 0-3-1-5-1-3-4-5-4-10 0-6 5-11 12-11z" />
@@ -113,7 +113,7 @@ export default function SkillsCarousel() {
                   {/* Front */}
                   <div className="absolute inset-0 [backface-visibility:hidden] border border-black/10 rounded-2xl p-8 flex flex-col">
                     <div className="mb-8 text-accent">{skill.icon}</div>
-                    <h3 className="font-sans font-medium text-lg text-ink">
+                    <h3 className="font-sans font-light text-lg text-ink">
                       {skill.name}
                     </h3>
                   </div>
@@ -135,7 +135,7 @@ export default function SkillsCarousel() {
           type="button"
           onClick={() => setIndex((i) => Math.max(0, i - 1))}
           disabled={index === 0}
-          aria-label="Zurück"
+          aria-label="Previous"
           className="w-10 h-10 rounded-full border border-black/15 flex items-center justify-center hover:border-black/40 disabled:opacity-30 transition-colors"
         >
           ←
@@ -144,7 +144,7 @@ export default function SkillsCarousel() {
           type="button"
           onClick={() => setIndex((i) => Math.min(maxIndex, i + 1))}
           disabled={index === maxIndex}
-          aria-label="Weiter"
+          aria-label="Next"
           className="w-10 h-10 rounded-full border border-black/15 flex items-center justify-center hover:border-black/40 disabled:opacity-30 transition-colors"
         >
           →

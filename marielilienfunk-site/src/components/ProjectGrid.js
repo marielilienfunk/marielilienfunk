@@ -5,10 +5,10 @@ import { TAGS, tagColor, tagTextColor } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 
 export default function ProjectGrid({ projects }) {
-  const [activeTag, setActiveTag] = useState("Alle");
+  const [activeTag, setActiveTag] = useState("All");
 
   const filtered =
-    activeTag === "Alle"
+    activeTag === "All"
       ? projects
       : projects.filter((p) => p.tags.includes(activeTag));
 
@@ -16,14 +16,14 @@ export default function ProjectGrid({ projects }) {
     <div>
       <div className="flex flex-wrap gap-2 mb-10">
         <button
-          onClick={() => setActiveTag("Alle")}
+          onClick={() => setActiveTag("All")}
           className={`px-4 py-1.5 text-sm tracking-wide border rounded-full transition-colors ${
-            activeTag === "Alle"
+            activeTag === "All"
               ? "bg-ink text-paper border-ink"
               : "border-black/15 text-black/60 hover:border-black/40"
           }`}
         >
-          Alle
+          All
         </button>
         {TAGS.map((tag) => {
           const color = tagColor(tag);
@@ -50,7 +50,7 @@ export default function ProjectGrid({ projects }) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-black/50 text-sm">Noch keine Projekte mit diesem Tag.</p>
+        <p className="text-black/50 text-sm">No projects with this tag yet.</p>
       )}
     </div>
   );

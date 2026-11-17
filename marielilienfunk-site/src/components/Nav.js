@@ -11,7 +11,7 @@ export default function Nav() {
           href="/"
           className="block w-[190px] sm:w-[220px] lg:w-[250px] text-ink"
           data-header-logo
-          aria-label="Marie-Lilien Funk – Startseite"
+          aria-label="Marie-Lilien Funk – Home"
         >
           <Logo className="block w-full h-auto" />
         </Link>

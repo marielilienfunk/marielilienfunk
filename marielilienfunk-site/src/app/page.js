@@ -45,12 +45,12 @@ export default function HomePage() {
       {/* Contact CTA */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
         <div className="border-t border-black/10 pt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <p className="font-sans font-light text-lg">Lust auf ein gemeinsames Projekt?</p>
+          <p className="font-sans font-light text-lg">Let’s create something together.</p>
           <a
             href="mailto:hello@marielilienfunk.com"
             className="inline-block px-5 py-2.5 bg-ink text-paper text-sm tracking-wide"
           >
-            Kontakt aufnehmen
+            Get in touch
           </a>
         </div>
       </section>
