@@ -33,6 +33,8 @@ const SKETCH = [
 ].map(([x, y]) => [(x - 310) / 1375, (y - 398) / 147]); // Schriftzug in der Skizze: x 310–1685, y 398–545
 const FLEE = 0.16; // Anteil der Bahn, über den ein verjagter Punkt aus dem Bild fliegt
 const STEP = 3.1; // Rasterabstand (SVG-Einheiten) beim Füllen der Buchstaben mit Punkten
+const CONFETTI_R = 4.2; // Radius der Konfetti-Punkte (SVG-Einheiten)
+const I_DOT_R = 4.5; // i-Punkte im großen Logo: Konfetti-Größe, ein kleines bisschen größer
 
 const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const easeOut = (t) => 1 - Math.pow(1 - t, 3);
@@ -122,7 +124,7 @@ export default function HeroLogo() {
 
       // Konfetti-Punkte: jeder hat einen Platz im Schriftzug und wechselt ihn ab und zu
       const homes = samplePoints().map((p) => toScreen(p.x, p.y));
-      const rBase = 4.2 * unit; // alle Punkte etwa gleich groß, wie Konfetti
+      const rBase = CONFETTI_R * unit; // alle Punkte etwa gleich groß, wie Konfetti
       const dots = homes.map((h) => ({
         home: h,
         x: h.x, y: h.y,
@@ -152,7 +154,7 @@ export default function HeroLogo() {
           if (dist < bestDist) (best = d), (bestDist = dist);
         }
         used.add(best);
-        best.keeper = { to, r: target.r * unit, k };
+        best.keeper = { to, r: I_DOT_R * unit, k };
         best.color = target.fill;
       });
 
@@ -193,10 +195,13 @@ export default function HeroLogo() {
       const y = window.scrollY;
       const u = reduce ? 1 : clamp01(y / (vh * DRAW_SCROLL));
       const T = u * s.total;
-      circles.current.forEach((c) => c && (c.style.opacity = u >= 1 ? "1" : "0"));
-
-      // ins Header-Logo schieben
+      // ins Header-Logo schieben; die i-Punkte wachsen dabei auf ihre Größe im Header-Logo
       const dock = easeInOut(clamp01((y - vh * DRAW_SCROLL) / (vh * DOCK_SCROLL)));
+      circles.current.forEach((c, i) => {
+        if (!c) return;
+        c.style.opacity = u >= 1 ? "1" : "0";
+        c.setAttribute("r", `${I_DOT_R + (DOTS[i].r - I_DOT_R) * dock}`);
+      });
       const header = document.querySelector("[data-header-logo] svg");
       if (header) {
         const t = header.getBoundingClientRect();
@@ -298,7 +303,7 @@ export default function HeroLogo() {
           <svg viewBox={`${VIEWBOX.x} ${VIEWBOX.y} ${VIEWBOX.w} ${VIEWBOX.h}`} className="block w-full h-auto overflow-visible">
             <path d={LETTERS} fill="currentColor" />
             {DOTS.map((d, i) => (
-              <circle key={i} ref={(c) => (circles.current[i] = c)} cx={d.cx} cy={d.cy} r={d.r} fill={d.fill} style={{ opacity: 0 }} />
+              <circle key={i} ref={(c) => (circles.current[i] = c)} cx={d.cx} cy={d.cy} r={I_DOT_R} fill={d.fill} style={{ opacity: 0 }} />
             ))}
           </svg>
         </div>
