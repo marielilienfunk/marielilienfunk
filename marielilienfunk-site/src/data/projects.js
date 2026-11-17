@@ -39,6 +39,7 @@ export const projects = [
     title: "Cocktail X Festival",
     tags: [],
     cover: "/images/cocktail-x/cocktail-x-cover.jpg",
+    animatedCover: "cocktail-x",
     gallery: [
       { video: "/images/cocktail-x/cocktail-x-rebranding.mp4", portrait: true },
       { video: "/images/cocktail-x/cocktail-x-karten-zu-icons.mp4", portrait: true },

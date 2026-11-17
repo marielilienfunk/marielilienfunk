@@ -1,11 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import CocktailXCover from "./CocktailXCover";
+
+const ANIMATED_COVERS = { "cocktail-x": CocktailXCover };
 
 export default function ProjectCard({ project }) {
   return (
     <Link href={`/projects/${project.slug}`} className="group block">
       <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-black/5">
-        {project.cover && (
+        {ANIMATED_COVERS[project.animatedCover] ? (
+          (() => { const Cover = ANIMATED_COVERS[project.animatedCover]; return <Cover />; })()
+        ) : project.cover && (
           <Image
             src={project.cover}
             alt={project.title}
