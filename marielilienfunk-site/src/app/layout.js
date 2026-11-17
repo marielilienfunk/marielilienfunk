@@ -1,4 +1,4 @@
-import { Noto_Sans, Source_Serif_4 } from "next/font/google";
+import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -8,14 +8,6 @@ const notoSans = Noto_Sans({
   weight: ["300", "500"],
   variable: "--font-noto",
 });
-
-// variable Schrift mit optischer Größe: bei großen Größen feiner, wie eine Display-Serif
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  axes: ["opsz"],
-  variable: "--font-serif",
-});
-
 export const metadata = {
   title: "Marie-Lilien Funk — Design, Fotografie, Film",
   description:
@@ -24,7 +16,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="de" className={`${notoSans.variable} ${sourceSerif.variable}`} suppressHydrationWarning>
+    <html lang="de" className={notoSans.variable} suppressHydrationWarning>
       <head>
         {/* Startseite: Header-Logo ausblenden, bevor das große Logo (HeroLogo) da ist */}
         <script

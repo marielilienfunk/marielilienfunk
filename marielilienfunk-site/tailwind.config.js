@@ -11,7 +11,7 @@ module.exports = {
         accent: "#8a6d5c",
       },
       fontFamily: {
-        serif: ["var(--font-serif)", "Georgia", "Times New Roman", "serif"],
+        serif: ["Georgia", "Times New Roman", "serif"],
         sans: ["var(--font-noto)", "Helvetica", "Arial", "sans-serif"],
       },
     },
