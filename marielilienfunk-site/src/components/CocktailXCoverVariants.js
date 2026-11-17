@@ -282,19 +282,34 @@ export function CoverCircles() {
     for (let c = 0; c < GRID_COLS; c++)
       if (!isGap(r, c)) dots.push([r, c]);
 
+  // jede Kugel dreht sich für sich: zufällige Richtung, Winkel und Tempo
+  const [rots, setRots] = useState(() => dots.map(() => ({ deg: 0, dur: 800 })));
+  const n = useTick(180);
+  useEffect(() => {
+    if (!n) return;
+    setRots((prev) =>
+      prev.map((r) =>
+        Math.random() < 0.12
+          ? { deg: r.deg + rand([-1, 1]) * rand([90, 180, 270, 360]), dur: 600 + Math.random() * 1400 }
+          : r
+      )
+    );
+  }, [n]);
+
   return (
     <Frame bg={C.bay}>
-      {dots.map(([r, c]) => (
+      {dots.map(([r, c], idx) => (
         <svg
           key={`${r}-${c}`}
           viewBox="0 0 100 100"
-          className="absolute cx-spin"
+          className="absolute"
           style={{
             left: `${c * cell + cell * 0.05}cqw`,
             top: `${offsetY + r * cell + cell * 0.05}cqw`,
             width: `${cell * 0.9}cqw`,
             height: `${cell * 0.9}cqw`,
-            animationDelay: `${(r + c) * 0.07}s`,
+            transform: `rotate(${rots[idx].deg}deg)`,
+            transition: `transform ${rots[idx].dur}ms cubic-bezier(.6,0,.3,1)`,
           }}
         >
           <path d="M50 0 A50 50 0 0 0 50 100Z" fill={C.hibiscus} />
@@ -304,15 +319,6 @@ export function CoverCircles() {
       <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#fff" }}>
         <Wordmark color="currentColor" size="6.6cqw" />
       </div>
-      <style>{`
-        .cx-spin { animation: cx-spin 4s cubic-bezier(.7,0,.2,1) infinite; }
-        @keyframes cx-spin {
-          0%, 30% { transform: rotate(0deg); }
-          50%, 80% { transform: rotate(180deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @media (prefers-reduced-motion: reduce) { .cx-spin { animation: none; } }
-      `}</style>
     </Frame>
   );
 }
