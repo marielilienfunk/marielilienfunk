@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { Outfit } from "next/font/google";
 
-const outfit = Outfit({ subsets: ["latin"], weight: ["400"] });
+export const outfit = Outfit({ subsets: ["latin"], weight: ["400"] });
 
 // Markenfarben Cocktail X
-const C = {
+export const C = {
   tangerine: "#F39200",
   jambalaya: "#55331A",
   everglade: "#1A4620",
@@ -15,9 +15,9 @@ const C = {
   cream: "#E3D6C4",
 };
 
-const STAR = "M50 0 C54 36 64 46 100 50 C64 54 54 64 50 100 C46 64 36 54 0 50 C36 46 46 36 50 0Z";
+export const STAR = "M50 0 C54 36 64 46 100 50 C64 54 54 64 50 100 C46 64 36 54 0 50 C36 46 46 36 50 0Z";
 
-const ICONS = [
+export const ICONS = [
   { id: "star", color: C.tangerine, d: STAR },
   { id: "circle", color: C.everglade, d: "M50 0 A50 50 0 1 1 49.99 0Z" },
   { id: "diamond", color: C.jambalaya, d: "M50 0 L100 50 L50 100 L0 50Z" },
