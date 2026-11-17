@@ -1,12 +1,15 @@
 import { projects } from "@/data/projects";
 import ProjectGrid from "@/components/ProjectGrid";
 import SkillsCarousel from "@/components/SkillsCarousel";
+import ScrollLogo from "@/components/ScrollLogo";
 
 const CLIENTS = ["Chop Chop Bloom", "Jolou Studio", "Irma's World", "Chateau de Brantes"];
 
 export default function HomePage() {
   return (
     <div>
+      <ScrollLogo />
+
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-14">
         <p className="font-sans font-light text-xl sm:text-2xl max-w-2xl leading-snug">

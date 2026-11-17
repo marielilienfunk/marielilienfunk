@@ -14,11 +14,10 @@ const KEY = "mlf-intro-seen";
 const FORM_MIN = 1400; // ms Punkte formen den Namen, mindestens
 const FORM_MAX = 3500; // ms höchstens, auch wenn die Seite noch lädt
 const WIGGLE = 800; // ms der Konfetti-Name steht und wuselt
-const DRAW = 2800; // ms der Strich schlingt sich durch den Namen
-const TRACE = 380; // ms bis ein Buchstabe nachgezogen ist
-const LETTER_FILL = 220; // ms bis er gefüllt ist
-const TRAIL = 650; // ms so lang ist der sichtbare Strich
-const LOOPS = 6; // Schlingen auf dem Weg
+const DRAW = 4200; // ms der Strich malt den ganzen Namen
+const LOOP_SPEED = 1.8; // in den Schlingen so viel schneller als auf den Buchstaben
+const LETTER_FILL = 220; // ms bis ein nachgemalter Buchstabe gefüllt ist
+const TRAIL = 380; // ms so lang ist der sichtbare Strich
 const SCATTER = 750; // ms bis ein verjagter Punkt weg ist
 const SETTLE = 650; // ms die i-Punkte hüpfen auf ihren Platz
 const HOLD = 600; // ms groß stehen lassen
@@ -100,7 +99,7 @@ export default function Intro() {
       rect.setAttribute("x", `${bb.x - 1}`);
       rect.setAttribute("y", `${bb.y - 1}`);
       rect.setAttribute("height", `${bb.height + 2}`);
-      return { i, len, bb, startX: toScreen(bb.x + bb.width * 0.3, 0).x, startedAt: 0 };
+      return { i, len, bb, drawn: 0, doneAt: 0 };
     });
 
     const cv = canvas.current;
@@ -151,9 +150,9 @@ export default function Intro() {
       dots.push({ ...pick(dots), home, x: home.x, y: home.y, floater: true });
     }
 
-    // der Strich: Spur der Stiftspitze (Bildschirm-px)
-    let trail = [];
-    let trailFrom = 0; // Zeitpunkt, ab dem die Spur sichtbar ist
+    // der Strich: sichtbarer Abschnitt der Stiftbahn (Zeitfenster in ms)
+    let route = [];
+    let trailWin = null;
     const lineW = Math.max(2.5, 2.3 * unit);
     const midY = top + H * 0.55;
 
@@ -191,8 +190,8 @@ export default function Intro() {
         ctx.fill();
       }
 
-      // Strich als weiche Linie durch die letzten Punkte der Spur
-      const vis = trail.filter((p) => p.t >= Math.max(trailFrom, now - TRAIL));
+      // Strich als weiche Linie durch den sichtbaren Abschnitt der Bahn
+      const vis = trailWin ? route.filter((p) => p.time >= trailWin.from && p.time <= trailWin.to) : [];
       if (vis.length > 1) {
         ctx.beginPath();
         ctx.moveTo(vis[0].x, vis[0].y);
@@ -252,48 +251,95 @@ export default function Intro() {
         return { d: best, to, r: target.r * unit, k };
       });
 
-      // 2 — der Strich schlingt sich von links nach rechts durch den Namen.
-      // Bahn: eine Zykloide mit Schlingen, deren Größe leicht schwankt.
-      const x0 = left - H * 1.2, x1 = left + W + H * 1.2;
-      const loopR = (u) => H * (0.5 + 0.18 * Math.sin(u * 17) + 0.1 * Math.sin(u * 7 + 1));
-      const reach = Math.max(28, H * 0.7);
-      const bandT = top - H * 0.3, bandB = top + H * 1.3;
-      trailFrom = performance.now();
-      await tween(DRAW, (t, now) => {
-        const u = t * 0.85 + easeInOut(t) * 0.15; // fast gleichmäßig, weich am Anfang und Ende
-        const theta = u * LOOPS * Math.PI * 2;
-        const base = x0 + (x1 - x0) * u;
-        const R = loopR(u);
-        const tip = {
-          x: base - R * Math.sin(theta),
-          y: midY - R * Math.cos(theta) * 0.95 + Math.sin(u * 9) * H * 0.15,
-          t: now,
-        };
-        trail.push(tip);
+      // 2 — der Strich malt das Logo: die Stiftspitze fährt die Umrisse der
+      // Buchstaben nach (links nach rechts) und schwingt dazwischen in Schlingen.
+      route = []; // { x, y, part, at, time }
+      const connect = (A, B, k) => {
+        // kubische Kurve mit gekreuzten Anfassern ergibt eine Schlinge
+        const span = Math.max(Math.abs(B.x - A.x), H * 0.8) * (1.1 + Math.random() * 0.5);
+        const lift = H * (0.55 + Math.random() * 0.5) * (k % 2 ? 1 : -1);
+        const c1 = { x: A.x + span, y: A.y + lift };
+        const c2 = { x: B.x - span, y: B.y + lift };
+        for (let s = 1; s <= 28; s++) {
+          const t = s / 28, m = 1 - t;
+          route.push({
+            x: m * m * m * A.x + 3 * m * m * t * c1.x + 3 * m * t * t * c2.x + t * t * t * B.x,
+            y: m * m * m * A.y + 3 * m * m * t * c1.y + 3 * m * t * t * c2.y + t * t * t * B.y,
+            part: null,
+          });
+        }
+      };
+      let prev = { x: left - H * 1.5, y: top + H * 1.7, part: null };
+      route.push(prev);
+      [...parts].sort((a, b) => a.bb.x - b.bb.x).forEach((p, k) => {
+        const path = strokes.current[p.i];
+        const s0 = path.getPointAtLength(0);
+        connect(prev, toScreen(s0.x, s0.y), k);
+        const n = Math.max(10, Math.ceil(p.len / 1.5));
+        for (let s = 0; s <= n; s++) {
+          const at = (p.len * s) / n;
+          const pt = path.getPointAtLength(at);
+          route.push({ ...toScreen(pt.x, pt.y), part: p, at });
+        }
+        prev = route[route.length - 1];
+      });
+      connect(prev, { x: left + W + H * 1.5, y: top - H * 0.7 }, parts.length);
 
-        // Punkte in der Nähe der Spitze und hinter dem Strich werden verjagt
+      // Zeitplan: auf den Buchstaben gleichmäßig, in den Schlingen schneller
+      let lenLetters = 0, lenLoops = 0;
+      for (let k = 1; k < route.length; k++) {
+        const seg = Math.hypot(route[k].x - route[k - 1].x, route[k].y - route[k - 1].y);
+        route[k].seg = seg;
+        if (route[k].part) lenLetters += seg;
+        else lenLoops += seg;
+      }
+      const speed = (lenLetters + lenLoops / LOOP_SPEED) / DRAW; // px pro ms auf den Buchstaben
+      route[0].time = 0;
+      for (let k = 1; k < route.length; k++) {
+        route[k].time = route[k - 1].time + route[k].seg / (route[k].part ? speed : speed * LOOP_SPEED);
+      }
+
+      const reach = Math.max(26, H * 0.55);
+      const bandT = top - H * 0.3, bandB = top + H * 1.3;
+      let j = 0; // bis hierhin ist der Stift gekommen
+      let doneRight = -Infinity; // rechter Rand der fertigen Buchstaben
+      await tween(DRAW, (t, now) => {
+        const T = t * DRAW;
+        while (j < route.length - 1 && route[j + 1].time <= T) {
+          j++;
+          const r = route[j];
+          if (!r.part) continue;
+          const p = r.part;
+          p.drawn = Math.max(p.drawn || 0, r.at);
+          strokes.current[p.i].style.strokeDashoffset = `${p.len - p.drawn}`;
+          if (p.drawn >= p.len - 0.01 && !p.doneAt) {
+            p.doneAt = now;
+            doneRight = Math.max(doneRight, toScreen(p.bb.x + p.bb.width, 0).x);
+          }
+        }
+        trailWin = { from: T - TRAIL, to: T };
+        const tip = route[j];
+
+        // Punkte an der Stiftspitze und im schon gemalten Teil werden verjagt
         for (const d of dots) {
           if (d.kickedAt || d.keep) continue;
           const dx = d.x - tip.x, dy = d.y - tip.y;
           const dist = Math.hypot(dx, dy);
-          const behind = d.x < base - H * 0.2 && d.y > bandT && d.y < bandB;
+          const behind = d.x < doneRight && d.y > bandT && d.y < bandB;
           if (dist < reach || behind) {
             const n = dist || 1;
             const f = 5 + Math.random() * 8;
-            d.vx = (dx / n) * f + 2;
+            d.vx = (dx / n) * f + 1;
             d.vy = (dy / n) * f - 2;
             d.kickedAt = now;
           }
         }
 
-        // Buchstaben, über die der Strich schon gefahren ist, zeichnen sich
+        // fertig nachgemalte Buchstaben füllen sich
         for (const p of parts) {
-          if (!p.startedAt && base > p.startX) p.startedAt = now;
-          if (!p.startedAt) continue;
-          const k = clamp01((now - p.startedAt) / TRACE);
-          strokes.current[p.i].style.strokeDashoffset = `${p.len * (1 - easeOut(k))}`;
-          const f = clamp01((now - p.startedAt - TRACE * 0.6) / LETTER_FILL);
-          clipRects.current[p.i].setAttribute("width", `${(p.bb.width + 2) * easeOut(f)}`);
+          if (!p.doneAt) continue;
+          const f = easeOut(clamp01((now - p.doneAt) / LETTER_FILL));
+          clipRects.current[p.i].setAttribute("width", `${(p.bb.width + 2) * f}`);
         }
       });
       if (!alive) return;
@@ -314,9 +360,8 @@ export default function Intro() {
       // 3 — Strich läuft aus, die drei Punkte hüpfen auf die i's
       strokeGroup.current.animate([{ opacity: 1 }, { opacity: 0 }], { duration: SETTLE, fill: "forwards" });
       await Promise.all([
-        tween(TRAIL, (t, now) => {
-          trailFrom = after + TRAIL * t;
-          if (t === 1) trail = [];
+        tween(TRAIL, (t) => {
+          trailWin = t < 1 ? { from: DRAW - TRAIL + TRAIL * t, to: DRAW } : null;
         }),
         ...keepers.map(({ d, to, r, k }) => {
           d.settling = true;
@@ -343,7 +388,18 @@ export default function Intro() {
       await wait(HOLD);
       if (!alive) return;
 
-      // 4 — klein werden und in den Header fliegen
+      // 4a — Startseite: das große Logo bleibt stehen (ScrollLogo übernimmt es
+      // an genau derselben Stelle), nur der Hintergrund blendet aus
+      if (document.querySelector("[data-scroll-logo]") && window.scrollY < 10) {
+        await overlay.current.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, easing: "ease", fill: "forwards" })
+          .finished;
+        if (!alive) return;
+        finish();
+        setDone(true);
+        return;
+      }
+
+      // 4b — sonst klein werden und in den Header fliegen
       const target = document.querySelector("[data-header-logo] svg");
       const big = el.getBoundingClientRect();
       if (target) {

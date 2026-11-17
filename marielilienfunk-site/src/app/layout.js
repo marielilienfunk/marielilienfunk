@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         {/* Intro nur beim ersten Aufruf pro Sitzung, nicht bei „Bewegung reduzieren“ */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var h=document.documentElement;try{if(sessionStorage.getItem("mlf-intro-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("intro-seen")}else{h.classList.add("intro-active")}}catch(e){h.classList.add("intro-seen")}})();`,
+            __html: `(function(){var h=document.documentElement;if(location.pathname==="/"&&scrollY<10)h.classList.add("logo-big");try{if(sessionStorage.getItem("mlf-intro-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("intro-seen")}else{h.classList.add("intro-active")}}catch(e){h.classList.add("intro-seen")}})();`,
           }}
         />
       </head>
