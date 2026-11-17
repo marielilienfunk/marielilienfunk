@@ -158,8 +158,23 @@ export default function ProjectDetail({ project, next }) {
 
       {/* Gallery */}
       <section className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-2 gap-4 sm:gap-6">
-        {project.gallery.map((item, i) =>
-          typeof item === "object" && item.video ? (
+        {project.gallery.map(function renderItem(item, i) {
+          // { row: [...] } zeigt mehrere Hochformate nebeneinander in einer Reihe
+          if (item.row) {
+            return (
+              <div
+                key={`row-${i}`}
+                className="col-span-2 grid gap-4 sm:gap-6"
+                style={{
+                  gridTemplateColumns: `repeat(${item.row.length}, minmax(0, 1fr))`,
+                }}
+              >
+                {item.row.map(renderItem)}
+              </div>
+            );
+          }
+
+          return typeof item === "object" && item.video ? (
             <GalleryVideo
               key={`video-${i}`}
               src={item.video}
@@ -173,8 +188,8 @@ export default function ProjectDetail({ project, next }) {
               portrait={item.portrait}
               alt={`${project.title} — Bild ${i + 1}`}
             />
-          )
-        )}
+          );
+        })}
       </section>
 
       {/* Next project / back */}

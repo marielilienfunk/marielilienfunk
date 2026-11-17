@@ -40,12 +40,19 @@ export const projects = [
     gallery: [
       { video: "/images/cocktail-x/cocktail-x-rebranding.mp4", portrait: true },
       { video: "/images/cocktail-x/cocktail-x-karten-zu-icons.mp4", portrait: true },
+      { image: "/images/cocktail-x/cocktail-x-briefmarken.jpg", portrait: true },
+      { video: "/images/cocktail-x/cocktail-x-coaster.mp4", portrait: true },
+      "/images/cocktail-x/cocktail-x-poster-mockup.jpg",
       { video: "/images/cocktail-x/cocktail-x-teaser.mp4", portrait: true },
       { video: "/images/cocktail-x/cocktail-x-app-teaser.mp4", portrait: true },
-      "/images/cocktail-x/cocktail-x-poster-mockup.jpg",
-      { video: "/images/cocktail-x/cocktail-x-tags-to-map.mp4", portrait: true },
-      { video: "/images/cocktail-x/cocktail-x-carousel.mp4", portrait: true },
       "/images/cocktail-x/cocktail-x-menu-karten.jpg",
+      {
+        row: [
+          { video: "/images/cocktail-x/cocktail-x-tags-to-map.mp4", portrait: true },
+          { video: "/images/cocktail-x/cocktail-x-carousel.mp4", portrait: true },
+          { video: "/images/cocktail-x/cocktail-x-barvorstellungen.mp4", portrait: true },
+        ],
+      },
       "/images/cocktail-x/cocktail-x-matchbook-mockup.jpg",
     ],
   },
