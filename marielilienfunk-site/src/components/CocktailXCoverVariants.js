@@ -200,3 +200,68 @@ export function CoverMorph() {
     </Frame>
   );
 }
+
+/* ---------- E: Icons poppen groß im Hintergrund ---------- */
+const POP_COLORS = [C.tangerine, C.everglade, C.bay, C.hibiscus, C.jambalaya];
+const POP_SPOTS = [
+  [14, 22], [86, 22], [14, 78], [86, 78], [50, 6], [50, 94], [30, 90], [70, 10], [6, 50], [94, 50],
+];
+
+export function CoverPop() {
+  const [items, setItems] = useState([]);
+  const n = useTick(850);
+  useEffect(() => {
+    if (!n) return;
+    setItems((prev) => {
+      const live = prev.filter((p) => !p.out);
+      const used = new Set(live.map((p) => p.spot));
+      const free = POP_SPOTS.map((_, i) => i).filter((i) => !used.has(i));
+      const spot = rand(free);
+      const next = {
+        key: n,
+        spot,
+        shape: rand(SHAPES),
+        color: rand(POP_COLORS),
+        size: 30 + Math.random() * 16,
+        rot: rand([0, 45, 90, -45]),
+      };
+      // ältestes sichtbares Icon raus, sobald mehr als 3 da sind
+      const marked = live.length >= 3
+        ? prev.map((p) => (p === live[0] ? { ...p, out: true } : p))
+        : prev;
+      return [...marked.filter((p) => !p.out || p.key > n - 2), next];
+    });
+  }, [n]);
+
+  return (
+    <Frame bg="#fff">
+      {items.map((p) => {
+        const [x, y] = POP_SPOTS[p.spot];
+        return (
+          <div
+            key={p.key}
+            className="absolute"
+            style={{
+              left: `${x}%`,
+              top: `${y}%`,
+              width: `${p.size}cqw`,
+              height: `${p.size}cqw`,
+              transform: `translate(-50%, -50%) rotate(${p.rot}deg)`,
+            }}
+          >
+            <Shape id={p.shape} color={p.color} className={`w-full h-full ${p.out ? "cx-pop-out" : "cx-pop-in"}`} />
+          </div>
+        );
+      })}
+      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#0d0d0d" }}>
+        <Wordmark color="currentColor" size="8cqw" />
+      </div>
+      <style>{`
+        .cx-pop-in { animation: cx-pop-in 550ms cubic-bezier(.3,1.6,.5,1) both; }
+        .cx-pop-out { animation: cx-pop-out 350ms cubic-bezier(.6,0,.8,.4) both; }
+        @keyframes cx-pop-in { from { transform: scale(0); } to { transform: scale(1); } }
+        @keyframes cx-pop-out { from { transform: scale(1); } to { transform: scale(0); } }
+      `}</style>
+    </Frame>
+  );
+}
