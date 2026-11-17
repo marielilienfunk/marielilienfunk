@@ -12,7 +12,7 @@ import { LETTERS, DOTS, VIEWBOX, BRAND_COLORS } from "./Logo";
 
 const DRAW_SCROLL = 1.1; // Bildschirmhöhen Scrollen, bis alle Punkte verjagt sind
 const DOCK_SCROLL = 0.45; // danach so viel, bis das Logo im Header sitzt
-const TRAIL = 0.14; // Anteil der Bahn, der als Strich zu sehen ist
+const TRAIL = 0.045; // Anteil der Bahn, der als Strich zu sehen ist
 
 // Bahn des Strichs, nach Maries Skizze: Punkte relativ zum Schriftzug
 // (x: 0 = linker, 1 = rechter Rand; y: 0 = Ober-, 1 = Unterkante der Buchstaben)
@@ -92,13 +92,23 @@ export default function HeroLogo() {
       const ctx = cv.getContext("2d");
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Stiftbahn: weiche Kurve (Catmull-Rom) durch die Punkte der Skizze
-      const pts = SKETCH.map(([x, y]) => ({ x: left + x * W, y: top + y * H }));
+      // Stiftbahn: Punkte der Skizze erst glätten (Chaikin), dann weiche Kurve (Catmull-Rom)
+      let pts = SKETCH.map(([x, y]) => ({ x: left + x * W, y: top + y * H }));
+      for (let n = 0; n < 3; n++) {
+        const next = [pts[0]];
+        for (let k = 0; k < pts.length - 1; k++) {
+          const a = pts[k], b = pts[k + 1];
+          next.push({ x: a.x * 0.75 + b.x * 0.25, y: a.y * 0.75 + b.y * 0.25 });
+          next.push({ x: a.x * 0.25 + b.x * 0.75, y: a.y * 0.25 + b.y * 0.75 });
+        }
+        next.push(pts[pts.length - 1]);
+        pts = next;
+      }
       const route = [pts[0]];
       for (let k = 0; k < pts.length - 1; k++) {
         const p0 = pts[Math.max(0, k - 1)], p1 = pts[k], p2 = pts[k + 1], p3 = pts[Math.min(pts.length - 1, k + 2)];
-        for (let s = 1; s <= 10; s++) {
-          const t = s / 10, t2 = t * t, t3 = t2 * t;
+        for (let s = 1; s <= 3; s++) {
+          const t = s / 3, t2 = t * t, t3 = t2 * t;
           const c = (a, b, c2, d) => 0.5 * (2 * b + (c2 - a) * t + (2 * a - 5 * b + 4 * c2 - d) * t2 + (3 * b - a - 3 * c2 + d) * t3);
           route.push({ x: c(p0.x, p1.x, p2.x, p3.x), y: c(p0.y, p1.y, p2.y, p3.y) });
         }
@@ -242,17 +252,21 @@ export default function HeroLogo() {
       if (u > 0 && u < 1) {
         const from = T - s.total * TRAIL;
         const vis = s.route.filter((p) => p.time >= from && p.time <= T);
-        if (vis.length > 1) {
+        // Spitze genau an der Scrollposition, damit der Strich nicht ruckelt
+        const next = s.route.find((p) => p.time > T);
+        const prev = vis[vis.length - 1];
+        if (next && prev) {
+          const k = (T - prev.time) / (next.time - prev.time || 1);
+          vis.push({ x: prev.x + (next.x - prev.x) * k, y: prev.y + (next.y - prev.y) * k });
+        }
+        // wie ein Pinselstrich: vorne voll, nach hinten dünn auslaufend
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#1f1f1f";
+        for (let k = 1; k < vis.length; k++) {
           ctx.beginPath();
-          ctx.moveTo(vis[0].x, vis[0].y);
-          for (let k = 1; k < vis.length - 1; k++) {
-            ctx.quadraticCurveTo(vis[k].x, vis[k].y, (vis[k].x + vis[k + 1].x) / 2, (vis[k].y + vis[k + 1].y) / 2);
-          }
-          ctx.lineTo(vis[vis.length - 1].x, vis[vis.length - 1].y);
-          ctx.lineCap = "round";
-          ctx.lineJoin = "round";
-          ctx.lineWidth = s.lineW;
-          ctx.strokeStyle = "#1f1f1f";
+          ctx.moveTo(vis[k - 1].x, vis[k - 1].y);
+          ctx.lineTo(vis[k].x, vis[k].y);
+          ctx.lineWidth = s.lineW * (0.15 + 0.85 * Math.pow(k / (vis.length - 1), 0.7));
           ctx.stroke();
         }
       }
