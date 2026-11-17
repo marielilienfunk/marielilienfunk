@@ -17,10 +17,10 @@ export default function ProjectGrid({ projects }) {
       <div className="flex flex-wrap gap-2 mb-10">
         <button
           onClick={() => setActiveTag("All")}
-          className={`px-4 py-1.5 text-sm tracking-wide border rounded-full transition-colors ${
+          className={`px-4 py-1.5 font-light text-[15px] border rounded-full transition-colors ${
             activeTag === "All"
               ? "bg-ink text-paper border-ink"
-              : "border-black/15 text-black/60 hover:border-black/40"
+              : "border-black/15 text-ink hover:border-black/40"
           }`}
         >
           All
@@ -32,8 +32,8 @@ export default function ProjectGrid({ projects }) {
             <button
               key={tag}
               onClick={() => setActiveTag(tag)}
-              className={`px-4 py-1.5 text-sm tracking-wide border rounded-full transition-colors ${
-                active ? "" : "border-black/15 text-black/60 hover:border-black/40"
+              className={`px-4 py-1.5 font-light text-[15px] border rounded-full transition-colors ${
+                active ? "" : "border-black/15 text-ink hover:border-black/40"
               }`}
               style={active ? { borderColor: color, backgroundColor: color, color: tagTextColor(color) } : undefined}
             >
