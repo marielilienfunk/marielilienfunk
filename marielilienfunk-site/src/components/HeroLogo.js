@@ -12,8 +12,25 @@ import { LETTERS, DOTS, VIEWBOX, BRAND_COLORS } from "./Logo";
 
 const DRAW_SCROLL = 1.1; // Bildschirmhöhen Scrollen, bis alle Punkte verjagt sind
 const DOCK_SCROLL = 0.45; // danach so viel, bis das Logo im Header sitzt
-const PASSES = 9; // so oft fährt der Strich quer über den Namen
-const TRAIL = 0.08; // Anteil der Bahn, der als Strich zu sehen ist
+const TRAIL = 0.14; // Anteil der Bahn, der als Strich zu sehen ist
+
+// Bahn des Strichs, nach Maries Skizze: Punkte relativ zum Schriftzug
+// (x: 0 = linker, 1 = rechter Rand; y: 0 = Ober-, 1 = Unterkante der Buchstaben)
+const SKETCH = [
+  [-200, 100], [0, 225], [20, 290], [70, 370], [130, 440], [200, 475], [300, 500], [380, 495], [420, 470],
+  [450, 430], [465, 410], [460, 400], [420, 400], [400, 420], [370, 450], [330, 505], [308, 545], [310, 595],
+  [350, 615], [430, 622], [500, 595], [560, 545], [630, 490], [700, 445], [760, 410], [820, 395], [880, 395],
+  [940, 425], [965, 475], [962, 530], [925, 560], [840, 580], [760, 580], [730, 560], [680, 535], [620, 500],
+  [560, 450], [538, 400], [575, 368], [650, 375], [720, 400], [760, 420], [830, 460], [900, 520], [960, 560],
+  [1020, 585], [1110, 605], [1220, 612], [1300, 590], [1380, 545], [1430, 490], [1440, 435], [1400, 422],
+  [1330, 430], [1260, 465], [1200, 505], [1130, 565], [1060, 630], [990, 690], [930, 720], [890, 738],
+  [890, 722], [930, 670], [1000, 605], [1070, 540], [1140, 470], [1190, 390], [1215, 320], [1215, 260],
+  [1185, 205], [1150, 190], [1100, 205], [1050, 245], [1022, 310], [1022, 350], [1070, 395], [1160, 435],
+  [1250, 470], [1350, 520], [1430, 560], [1500, 600], [1560, 620], [1600, 618], [1650, 580], [1700, 535],
+  [1728, 460], [1738, 395], [1715, 360], [1670, 352], [1610, 395], [1578, 440], [1560, 500], [1535, 580],
+  [1500, 670], [1450, 745], [1400, 790], [1345, 805], [1305, 785], [1285, 745], [1290, 695], [1330, 640],
+  [1400, 580], [1480, 540], [1560, 505], [1660, 465], [1780, 462], [1880, 440], [2000, 400], [2250, 330],
+].map(([x, y]) => [(x - 310) / 1375, (y - 398) / 147]); // Schriftzug in der Skizze: x 310–1685, y 398–545
 const FLEE = 0.16; // Anteil der Bahn, über den ein verjagter Punkt aus dem Bild fliegt
 const STEP = 3.1; // Rasterabstand (SVG-Einheiten) beim Füllen der Buchstaben mit Punkten
 
@@ -75,33 +92,17 @@ export default function HeroLogo() {
       const ctx = cv.getContext("2d");
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Stiftbahn: kommt von unten und fährt in Schlingen kreuz und quer über den Namen
-      const route = [];
-      const curve = (A, B, k) => {
-        // kubische Kurve; gekreuzte Anfasser ergeben eine Schlinge
-        const dx = B.x - A.x, dy = B.y - A.y;
-        const bend = H * rand(0.5, 1.1) * (k % 2 ? 1 : -1);
-        const cross = rand(0.25, 0.55);
-        const c1 = { x: A.x + dx * (1 - cross) - dy * 0.2, y: A.y + dy * (1 - cross) + bend };
-        const c2 = { x: A.x + dx * cross + dy * 0.2, y: A.y + dy * cross - bend };
-        for (let s = 1; s <= 36; s++) {
-          const t = s / 36, m = 1 - t;
-          route.push({
-            x: m * m * m * A.x + 3 * m * m * t * c1.x + 3 * m * t * t * c2.x + t * t * t * B.x,
-            y: m * m * m * A.y + 3 * m * m * t * c1.y + 3 * m * t * t * c2.y + t * t * t * B.y,
-          });
+      // Stiftbahn: weiche Kurve (Catmull-Rom) durch die Punkte der Skizze
+      const pts = SKETCH.map(([x, y]) => ({ x: left + x * W, y: top + y * H }));
+      const route = [pts[0]];
+      for (let k = 0; k < pts.length - 1; k++) {
+        const p0 = pts[Math.max(0, k - 1)], p1 = pts[k], p2 = pts[k + 1], p3 = pts[Math.min(pts.length - 1, k + 2)];
+        for (let s = 1; s <= 10; s++) {
+          const t = s / 10, t2 = t * t, t3 = t2 * t;
+          const c = (a, b, c2, d) => 0.5 * (2 * b + (c2 - a) * t + (2 * a - 5 * b + 4 * c2 - d) * t2 + (3 * b - a - 3 * c2 + d) * t3);
+          route.push({ x: c(p0.x, p1.x, p2.x, p3.x), y: c(p0.y, p1.y, p2.y, p3.y) });
         }
-      };
-      const bandTop = top + H * 0.15, bandBottom = top + H * 0.95;
-      const points = [{ x: left + W * rand(0.35, 0.65), y: vh + H }];
-      for (let k = 0; k < PASSES; k++) {
-        const side = k % 2 ? rand(0.75, 1.02) : rand(-0.02, 0.25);
-        const row = [0.05, 0.5, 0.95][k % 3] + rand(-0.12, 0.12);
-        points.push({ x: left + W * side, y: bandTop + (bandBottom - bandTop) * row });
       }
-      points.push({ x: left + W * rand(0.4, 0.8), y: -H * 2 });
-      route.push(points[0]);
-      for (let k = 1; k < points.length; k++) curve(points[k - 1], points[k], k);
 
       route[0].time = 0;
       for (let k = 1; k < route.length; k++) {
@@ -172,7 +173,7 @@ export default function HeroLogo() {
         d.flutter = H * rand(0.08, 0.25);
       }
 
-      return { vw, vh, W, H, left, top, ctx, route, total, dots, lineW: Math.max(2.5, 2.3 * unit) };
+      return { vw, vh, W, H, left, top, ctx, route, total, dots, lineW: Math.max(3, H * 0.06) };
     };
 
     const frame = (now) => {
