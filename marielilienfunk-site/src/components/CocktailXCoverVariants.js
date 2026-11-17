@@ -165,20 +165,21 @@ export function CoverPattern() {
 
 /* ---------- D: Stern wird zum Icon ---------- */
 const MORPHS = [
-  { bg: "#0d0d0d", text: "#fff", shape: "star", fg: "#fff" },
-  { bg: C.tangerine, text: C.jambalaya, shape: "circle", fg: C.bay },
-  { bg: C.everglade, text: C.cream, shape: "diamond", fg: C.tangerine },
-  { bg: C.hibiscus, text: C.cream, shape: "hourglass", fg: C.jambalaya },
-  { bg: C.bay, text: C.cream, shape: "ring", fg: C.tangerine },
-  { bg: C.cream, text: C.jambalaya, shape: "half", fg: C.hibiscus },
+  { shape: "star", fg: "#fff" },
+  { shape: "circle", fg: C.everglade },
+  { shape: "star", fg: C.tangerine },
+  { shape: "hourglass", fg: C.hibiscus },
+  { shape: "ring", fg: C.bay },
+  { shape: "diamond", fg: C.jambalaya },
+  { shape: "half", fg: C.cream },
 ];
 
 export function CoverMorph() {
   const n = useTick(1300);
   const m = MORPHS[n % MORPHS.length];
   return (
-    <Frame bg={m.bg}>
-      <div className="absolute inset-0 flex items-center justify-center" style={{ color: m.text, transition: "color 700ms ease" }}>
+    <Frame bg="#0d0d0d">
+      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#fff" }}>
         <Wordmark
           color="currentColor"
           size="11cqw"

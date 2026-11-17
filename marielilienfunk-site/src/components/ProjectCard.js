@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import CocktailXCover from "./CocktailXCover";
+import { CoverMorph } from "./CocktailXCoverVariants";
 
-const ANIMATED_COVERS = { "cocktail-x": CocktailXCover };
+const ANIMATED_COVERS = { "cocktail-x": CoverMorph };
 
 export default function ProjectCard({ project }) {
   return (
