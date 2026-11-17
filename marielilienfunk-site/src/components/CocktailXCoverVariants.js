@@ -284,17 +284,20 @@ export function CoverCircles() {
 
   // jede Kugel dreht sich für sich: zufällige Richtung, Winkel und Tempo
   const [rots, setRots] = useState(() => dots.map(() => ({ deg: 0, dur: 800 })));
-  const n = useTick(180);
+  const n = useTick(450);
   useEffect(() => {
     if (!n) return;
+    // pro Takt nur 1–2 zufällige Kugeln
+    const pick = new Set([Math.floor(Math.random() * dots.length)]);
+    if (Math.random() < 0.4) pick.add(Math.floor(Math.random() * dots.length));
     setRots((prev) =>
-      prev.map((r) =>
-        Math.random() < 0.12
-          ? { deg: r.deg + rand([-1, 1]) * rand([90, 180, 270, 360]), dur: 600 + Math.random() * 1400 }
+      prev.map((r, i) =>
+        pick.has(i)
+          ? { deg: r.deg + rand([-1, 1]) * rand([90, 180, 270, 360]), dur: 700 + Math.random() * 1300 }
           : r
       )
     );
-  }, [n]);
+  }, [n]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Frame bg={C.bay}>
