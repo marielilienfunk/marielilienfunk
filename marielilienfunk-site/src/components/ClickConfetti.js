@@ -58,16 +58,18 @@ export default function ClickConfetti() {
       raf = bursts.length ? requestAnimationFrame(frame) : 0;
     };
 
-    // Strang: Scheiben entlang einer Kurve, die vom Klickpunkt nach oben schwingt
+    // Strang: Scheiben entlang einer leicht geschwungenen Kurve, zufällig nach
+    // oben, unten, links oder rechts
     const burst = (cx, cy) => {
-      let angle = rand(-Math.PI * 0.8, -Math.PI * 0.2);
-      const turn = rand(-0.18, 0.18);
+      const directions = [-Math.PI / 2, Math.PI / 2, Math.PI, 0];
+      let angle = directions[Math.floor(Math.random() * 4)] + rand(-0.25, 0.25);
+      const turn = rand(-0.1, 0.1);
       let x = cx, y = cy;
       const discs = [];
       for (let k = 0; k < DISCS; k++) {
         discs.push({
           x, y,
-          r: rand(10, 20) * (1 - k * 0.025),
+          r: 13 * rand(0.94, 1.06), // alle etwa gleich groß
           color: BRAND_COLORS[Math.floor(Math.random() * BRAND_COLORS.length)],
           delay: k * SPAWN,
           vx: rand(-120, 120),
