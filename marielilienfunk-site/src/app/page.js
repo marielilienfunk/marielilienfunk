@@ -14,7 +14,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-24">
         <LineReveal
-          className="font-sans font-light text-ink text-center text-2xl sm:text-[2.1rem] lg:text-[2.35rem] leading-[1.3] max-w-[44rem] mx-auto"
+          className="font-sans font-light text-ink text-center text-xl sm:text-[1.6rem] lg:text-[1.8rem] leading-[1.35] max-w-[36rem] mx-auto"
           text="I am a multidisciplinary designer specialised in Art Direction, Photography & Film. With a curious and open mind I gain insights into the worlds around me, creating authentic and compelling stories for my clients their brands & their products."
         />
       </section>
