@@ -182,7 +182,7 @@ export function CoverMorph() {
       <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#0d0d0d" }}>
         <Wordmark
           color="currentColor"
-          size="11cqw"
+          size="8cqw"
           starSlot={
             <Shape
               key={n}
