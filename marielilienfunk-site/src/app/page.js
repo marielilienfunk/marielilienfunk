@@ -1,14 +1,14 @@
 import { projects } from "@/data/projects";
 import ProjectGrid from "@/components/ProjectGrid";
 import SkillsCarousel from "@/components/SkillsCarousel";
-import ScrollLogo from "@/components/ScrollLogo";
+import HeroLogo from "@/components/HeroLogo";
 
 const CLIENTS = ["Chop Chop Bloom", "Jolou Studio", "Irma's World", "Chateau de Brantes"];
 
 export default function HomePage() {
   return (
     <div>
-      <ScrollLogo />
+      <HeroLogo />
 
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-14">

@@ -40,10 +40,5 @@ a:focus-visible .logo-dot {
   a:hover .logo-dot, a:focus-visible .logo-dot { animation: none; }
 }
 
-/* Intro */
-html.intro-seen .intro-overlay { display: none; }
-html.intro-active [data-header-logo] { visibility: hidden; }
-
 /* Startseite oben: das große Logo steht in der Mitte, der Header zeigt keins */
 html.logo-big [data-header-logo] { visibility: hidden; }
-html.intro-active body { overflow: hidden; }

@@ -2,7 +2,6 @@ import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Intro from "@/components/Intro";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -20,15 +19,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="de" className={notoSans.variable} suppressHydrationWarning>
       <head>
-        {/* Intro nur beim ersten Aufruf pro Sitzung, nicht bei „Bewegung reduzieren“ */}
+        {/* Startseite: Header-Logo ausblenden, bevor das große Logo (HeroLogo) da ist */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var h=document.documentElement;if(location.pathname==="/"&&scrollY<10)h.classList.add("logo-big");try{if(sessionStorage.getItem("mlf-intro-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("intro-seen")}else{h.classList.add("intro-active")}}catch(e){h.classList.add("intro-seen")}})();`,
+            __html: `if(location.pathname==="/")document.documentElement.classList.add("logo-big");`,
           }}
         />
       </head>
       <body className="min-h-screen flex flex-col font-sans">
-        <Intro />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
