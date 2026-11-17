@@ -15,7 +15,7 @@ export default function Nav() {
         >
           <Logo className="block w-full h-auto" />
         </Link>
-        <nav className="flex items-center justify-center sm:justify-end gap-6 sm:gap-8 text-[13px] sm:text-sm tracking-wider">
+        <nav className="flex items-center justify-center sm:justify-end gap-6 sm:gap-8 font-light text-ink text-[15px] sm:text-base">
           <Link href="/" className="hover:text-accent transition-colors">
             Work
           </Link>
