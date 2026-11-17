@@ -1,9 +1,7 @@
-import Image from "next/image";
 import { projects } from "@/data/projects";
 import ProjectGrid from "@/components/ProjectGrid";
 import SkillsCarousel from "@/components/SkillsCarousel";
 
-const heroProject = projects.find((p) => p.slug === "didamie");
 const CLIENTS = ["Chop Chop Bloom", "Jolou Studio", "Irma's World", "Chateau de Brantes"];
 
 export default function HomePage() {
@@ -11,15 +9,6 @@ export default function HomePage() {
     <div>
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-14">
-        <div className="relative aspect-[16/8] w-full overflow-hidden rounded-2xl bg-black/5 mb-10">
-          <Image
-            src={heroProject.cover}
-            alt={heroProject.title}
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
         <p className="font-sans font-light text-xl sm:text-2xl max-w-2xl leading-snug">
           I am a multidisciplinary designer specialised in Art Direction,
           Photography &amp; Film. With a curious and open mind I gain

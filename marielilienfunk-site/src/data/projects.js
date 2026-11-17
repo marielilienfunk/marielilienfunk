@@ -1,3 +1,5 @@
+import { BRAND_COLORS, PINK } from "@/components/Logo";
+
 // Platzhalter-Content, übernommen von der aktuellen Wix-Seite (marielilienfunk.com).
 // Bilder werden vorerst noch von Wix geladen — sobald du eigene Dateien hast,
 // einfach die "cover" / "gallery"-URLs durch lokale Bilder in /public/projects ersetzen.
@@ -160,3 +162,13 @@ export function getProjectBySlug(slug) {
 // Automatisch aus allen vorkommenden Tags gebildet — wächst mit, sobald du
 // bei einem Projekt einen neuen Tag einträgst.
 export const TAGS = Array.from(new Set(projects.flatMap((p) => p.tags)));
+
+// Farbe eines Pill-Tags: Tags bekommen der Reihe nach Rot, Grün, Blau, Rosa;
+// alles andere (z. B. Services) die Farbe an Position i.
+export function tagColor(tag, i = 0) {
+  const idx = TAGS.indexOf(tag);
+  return BRAND_COLORS[(idx >= 0 ? idx : i) % BRAND_COLORS.length];
+}
+
+// Schrift auf der Pill-Farbe: dunkel auf Rosa, sonst weiß
+export const tagTextColor = (color) => (color === PINK ? "#1f1f1f" : "#ffffff");

@@ -12,6 +12,10 @@ export const DOTS = [
 
 export const VIEWBOX = { x: -1, y: -1, w: 533.83, h: 57.03 };
 
+// Markenfarben: Rot, Grün und Blau der i-Punkte plus Pastellrosa
+export const PINK = "#F5C6D6";
+export const BRAND_COLORS = [...DOTS.map((d) => d.fill), PINK];
+
 export default function Logo({ className = "" }) {
   return (
     <svg

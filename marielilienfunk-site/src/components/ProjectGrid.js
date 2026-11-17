@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TAGS } from "@/data/projects";
+import { TAGS, tagColor, tagTextColor } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 
 export default function ProjectGrid({ projects }) {
@@ -15,19 +15,32 @@ export default function ProjectGrid({ projects }) {
   return (
     <div>
       <div className="flex flex-wrap gap-2 mb-10">
-        {["Alle", ...TAGS].map((tag) => (
-          <button
-            key={tag}
-            onClick={() => setActiveTag(tag)}
-            className={`px-4 py-1.5 text-sm tracking-wide border rounded-full transition-colors ${
-              activeTag === tag
-                ? "bg-ink text-paper border-ink"
-                : "border-black/15 text-black/60 hover:border-black/40"
-            }`}
-          >
-            {tag}
-          </button>
-        ))}
+        <button
+          onClick={() => setActiveTag("Alle")}
+          className={`px-4 py-1.5 text-sm tracking-wide border rounded-full transition-colors ${
+            activeTag === "Alle"
+              ? "bg-ink text-paper border-ink"
+              : "border-black/15 text-black/60 hover:border-black/40"
+          }`}
+        >
+          Alle
+        </button>
+        {TAGS.map((tag) => {
+          const color = tagColor(tag);
+          const active = activeTag === tag;
+          return (
+            <button
+              key={tag}
+              onClick={() => setActiveTag(tag)}
+              className={`px-4 py-1.5 text-sm tracking-wide border rounded-full transition-colors ${
+                active ? "" : "border-black/15 text-black/60 hover:border-black/40"
+              }`}
+              style={active ? { borderColor: color, backgroundColor: color, color: tagTextColor(color) } : undefined}
+            >
+              {tag}
+            </button>
+          );
+        })}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
