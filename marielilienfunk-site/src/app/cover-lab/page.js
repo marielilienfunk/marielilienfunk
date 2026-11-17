@@ -1,5 +1,5 @@
 import CocktailXCover from "@/components/CocktailXCover";
-import { CoverStamps, CoverPattern, CoverMorph, CoverPop } from "@/components/CocktailXCoverVariants";
+import { CoverStamps, CoverPattern, CoverMorph, CoverPop, CoverCircles } from "@/components/CocktailXCoverVariants";
 
 export const metadata = { title: "Cover Lab", robots: { index: false } };
 
@@ -9,6 +9,7 @@ const VARIANTS = [
   ["C – Muster mit Label", CoverPattern],
   ["D – Stern wird zum Icon", CoverMorph],
   ["E – Icons poppen im Hintergrund", CoverPop],
+  ["F – Kugel-Muster", CoverCircles],
 ];
 
 export default function CoverLab() {

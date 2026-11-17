@@ -268,3 +268,51 @@ export function CoverPop() {
     </Frame>
   );
 }
+
+/* ---------- F: Kugel-Muster mit Logo, Kreise drehen sich ---------- */
+const GRID_COLS = 11;
+const GRID_ROWS = 8;
+const isGap = (r, c) => (r === 3 || r === 4) && c >= 3 && c <= 7;
+
+export function CoverCircles() {
+  const cell = 100 / GRID_COLS; // in cqw
+  const offsetY = (75 - GRID_ROWS * cell) / 2;
+  const dots = [];
+  for (let r = 0; r < GRID_ROWS; r++)
+    for (let c = 0; c < GRID_COLS; c++)
+      if (!isGap(r, c)) dots.push([r, c]);
+
+  return (
+    <Frame bg={C.bay}>
+      {dots.map(([r, c]) => (
+        <svg
+          key={`${r}-${c}`}
+          viewBox="0 0 100 100"
+          className="absolute cx-spin"
+          style={{
+            left: `${c * cell + cell * 0.05}cqw`,
+            top: `${offsetY + r * cell + cell * 0.05}cqw`,
+            width: `${cell * 0.9}cqw`,
+            height: `${cell * 0.9}cqw`,
+            animationDelay: `${(r + c) * 0.07}s`,
+          }}
+        >
+          <path d="M50 0 A50 50 0 0 0 50 100Z" fill={C.hibiscus} />
+          <path d="M50 0 A50 50 0 0 1 50 100Z" fill={C.jambalaya} />
+        </svg>
+      ))}
+      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "#fff" }}>
+        <Wordmark color="currentColor" size="6.6cqw" />
+      </div>
+      <style>{`
+        .cx-spin { animation: cx-spin 4s cubic-bezier(.7,0,.2,1) infinite; }
+        @keyframes cx-spin {
+          0%, 30% { transform: rotate(0deg); }
+          50%, 80% { transform: rotate(180deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) { .cx-spin { animation: none; } }
+      `}</style>
+    </Frame>
+  );
+}

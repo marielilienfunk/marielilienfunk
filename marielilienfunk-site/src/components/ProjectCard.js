@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CoverPop } from "./CocktailXCoverVariants";
+import { CoverCircles } from "./CocktailXCoverVariants";
 
-const ANIMATED_COVERS = { "cocktail-x": CoverPop };
+const ANIMATED_COVERS = { "cocktail-x": CoverCircles };
 
 export default function ProjectCard({ project }) {
   return (
