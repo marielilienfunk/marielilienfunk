@@ -31,8 +31,20 @@ export const projects = [
     client: "Around Around",
     role: "Development of the visual identity.",
     tags: ["Design & Branding"],
-    cover:
-      "https://static.wixstatic.com/media/a138c8_6908d89c67b24098be6cffe8fdd9545d~mv2.png/v1/fit/w_960,h_722,q_90/a138c8_6908d89c67b24098be6cffe8fdd9545d~mv2.png",
+    cover: "/images/around-around/around-around-cover.jpg",
+    gallery: [
+      { video: "/images/around-around/around-around-sketches.mp4", portrait: true },
+      { video: "/images/around-around/around-around-aa-turn.mp4", portrait: true },
+      "/images/around-around/around-around-poster.jpg",
+      { video: "/images/around-around/around-around-socke.mp4", portrait: true, ratio: "780 / 1080" },
+      { video: "/images/around-around/around-around-logo.mp4", portrait: true, ratio: "780 / 1080" },
+      { image: "/images/around-around/around-around-label.jpg", portrait: true },
+      { image: "/images/around-around/around-around-window.jpg", portrait: true },
+      { video: "/images/around-around/around-around-a-turn.mp4", portrait: true },
+      { video: "/images/around-around/around-around-socks.mp4", portrait: true },
+      { image: "/images/around-around/around-around-tag.jpg", portrait: true },
+      { image: "/images/around-around/around-around-card.jpg", portrait: true },
+    ],
   },
   {
     slug: "cocktail-x-festival",

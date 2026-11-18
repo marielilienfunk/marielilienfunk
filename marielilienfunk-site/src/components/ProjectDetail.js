@@ -58,9 +58,9 @@ function GalleryVideo({ src, portrait, ratio }) {
       <div
         ref={containerRef}
         className={`overflow-hidden rounded-2xl bg-black/5 ${
-          portrait ? "aspect-[4/5]" : ""
+          portrait && !ratio ? "aspect-[4/5]" : ""
         }`}
-        style={portrait ? undefined : { aspectRatio: ratio }}
+        style={ratio ? { aspectRatio: ratio } : undefined}
       >
         {isNear &&
           (asImage ? (
