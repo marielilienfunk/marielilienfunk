@@ -39,11 +39,10 @@ export const projects = [
       { video: "/images/around-around/around-around-socks.mp4", portrait: true },
       "/images/around-around/around-around-poster.jpg",
       { image: "/images/around-around/around-around-tag.jpg", portrait: true },
-      { image: "/images/around-around/around-around-label.jpg", portrait: true },
-      { video: "/images/around-around/around-around-aa-turn.mp4", portrait: true },
+      { image: "/images/around-around/around-around-label-knit.jpg", portrait: true },
+      { image: "/images/around-around/around-around-card.jpg", portrait: true },
       { video: "/images/around-around/around-around-socke.mp4", portrait: true, position: "center bottom" },
       { video: "/images/around-around/around-around-logo.mp4", portrait: true },
-      { image: "/images/around-around/around-around-card.jpg", portrait: true },
     ],
   },
   {
