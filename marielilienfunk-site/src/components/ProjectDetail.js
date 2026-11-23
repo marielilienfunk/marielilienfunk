@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 
-function GalleryVideo({ src, portrait, ratio }) {
+function GalleryVideo({ src, portrait, ratio, position }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const [asImage, setAsImage] = useState(false);
@@ -69,6 +69,7 @@ function GalleryVideo({ src, portrait, ratio }) {
               src={src}
               alt=""
               className={className}
+              style={{ objectPosition: position }}
               onError={() => setAsImage(false)}
             />
           ) : (
@@ -76,6 +77,7 @@ function GalleryVideo({ src, portrait, ratio }) {
               ref={videoRef}
               src={src}
               className={className}
+              style={{ objectPosition: position }}
               autoPlay
               muted
               loop
@@ -180,6 +182,7 @@ export default function ProjectDetail({ project, next }) {
               src={item.video}
               portrait={item.portrait}
               ratio={item.ratio}
+              position={item.position}
             />
           ) : (
             <GalleryImage
