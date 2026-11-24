@@ -199,7 +199,7 @@ function Arrow({ dir, onClick }) {
 // Galerie zum Durchklicken: { carousel: [...], ratio: "4 / 5" }. Bilder bleiben
 // in ihrem Format, links und rechts mittig sitzt je ein kleiner Pfeil; auf dem
 // Handy kann man auch wischen.
-function GalleryCarousel({ items, ratio = "4 / 5" }) {
+function GalleryCarousel({ items, ratio = "4 / 5", center }) {
   const ref = useRef(null);
   const swipe = useRef(null);
   const [index, setIndex] = useState(0);
@@ -217,10 +217,13 @@ function GalleryCarousel({ items, ratio = "4 / 5" }) {
   }, [inView]);
 
   return (
-    <Reveal y={40}>
+    // center: allein in der Reihe, mittig in Spaltenbreite
+    <Reveal y={40} className={center ? "col-span-2" : undefined}>
       <div
         ref={ref}
-        className="relative select-none overflow-hidden rounded-2xl"
+        className={`relative select-none overflow-hidden rounded-2xl ${
+          center ? "mx-auto w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.75rem)]" : ""
+        }`}
         style={{ aspectRatio: ratio, touchAction: "pan-y" }}
         onPointerDown={(e) => (swipe.current = e.clientX)}
         onPointerUp={(e) => {
@@ -340,6 +343,7 @@ export default function ProjectDetail({ project, next }) {
                 key={`carousel-${i}`}
                 items={item.carousel}
                 ratio={item.ratio}
+                center={item.center}
               />
             );
           }

@@ -128,23 +128,17 @@ export const projects = [
         ratio: "4 / 5",
       },
       { video: "/images/chop-chop-bloom/chop-chop-bloom-illus.mp4", portrait: true },
+      "/images/chop-chop-bloom/chop-chop-bloom-stationery.jpg",
+      "/images/chop-chop-bloom/chop-chop-bloom-shears-detail.jpg",
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-film.mp4", ratio: "16 / 9" },
       {
-        row: ["/images/chop-chop-bloom/chop-chop-bloom-stationery.jpg", "/images/chop-chop-bloom/chop-chop-bloom-shears-detail.jpg"],
-        cols: "1.5fr 1.291fr",
-      },
-      {
-        row: [
-          { video: "/images/chop-chop-bloom/chop-chop-bloom-film.mp4", portrait: true, ratio: "16 / 9" },
-          {
-            carousel: [
-              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-1.mp4" },
-              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-2.mp4" },
-              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-3.mp4" },
-            ],
-            ratio: "700 / 782",
-          },
+        carousel: [
+          { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-1.mp4" },
+          { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-2.mp4" },
+          { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-3.mp4" },
         ],
-        cols: "1.778fr 0.895fr",
+        ratio: "700 / 782",
+        center: true,
       },
     ],
   },
