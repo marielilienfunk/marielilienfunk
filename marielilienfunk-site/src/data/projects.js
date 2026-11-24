@@ -108,38 +108,55 @@ export const projects = [
       "Chop Chop Bloom is an luxurious urban gardening brand, selling high quality secateurs. The idea of the brand is to give gardening a fashionable twist and enhance its fun and playful sides, while being extraordinarily chic doing so.",
     tags: ["Design & Branding", "Photography"],
     cover: "/images/chop-chop-bloom/chop-chop-bloom-cover.jpg",
+    // Reihen mit "cols": Breiten im Verhältnis der Formate, damit alles gleich hoch ist
     gallery: [
-      { video: "/images/chop-chop-bloom/chop-chop-bloom-leder-cards.mp4", portrait: true },
       { video: "/images/chop-chop-bloom/chop-chop-bloom-cards.mp4", portrait: true },
-      { video: "/images/chop-chop-bloom/chop-chop-bloom-garden-shears.mp4", portrait: true, ratio: "1 / 1" },
-      { video: "/images/chop-chop-bloom/chop-chop-bloom-description.mp4", portrait: true, ratio: "1 / 1" },
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-leder-cards.mp4", portrait: true },
       {
-        carousel: [
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-1.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-2.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-3.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-4.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-5.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-6.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-7.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-8.jpg",
-          "/images/chop-chop-bloom/chop-chop-bloom-photo-9.jpg",
+        row: [
+          { video: "/images/chop-chop-bloom/chop-chop-bloom-garden-shears.mp4", portrait: true, ratio: "1 / 1" },
+          {
+            carousel: [
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-1.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-2.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-3.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-4.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-5.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-6.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-7.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-8.jpg",
+              "/images/chop-chop-bloom/chop-chop-bloom-photo-9.jpg",
+            ],
+            ratio: "4 / 5",
+          },
         ],
-        ratio: "4 / 5",
+        cols: "1fr 0.8fr",
       },
-      { video: "/images/chop-chop-bloom/chop-chop-bloom-illus.mp4", portrait: true },
-      "/images/chop-chop-bloom/chop-chop-bloom-stationery.jpg",
+      {
+        row: [
+          { video: "/images/chop-chop-bloom/chop-chop-bloom-description.mp4", portrait: true, ratio: "1 / 1" },
+          "/images/chop-chop-bloom/chop-chop-bloom-envelope.jpg",
+        ],
+        cols: "1fr 0.724fr",
+      },
       "/images/chop-chop-bloom/chop-chop-bloom-shears-detail.jpg",
-      { video: "/images/chop-chop-bloom/chop-chop-bloom-film.mp4", ratio: "16 / 9" },
       {
-        carousel: [
-          { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-1.mp4" },
-          { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-2.mp4" },
-          { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-3.mp4" },
+        row: [
+          { video: "/images/chop-chop-bloom/chop-chop-bloom-illus.mp4", portrait: true, ratio: "4 / 5" },
+          {
+            carousel: [
+              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-1.mp4" },
+              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-2.mp4" },
+              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-3.mp4" },
+            ],
+            ratio: "700 / 782",
+          },
         ],
-        ratio: "700 / 782",
-        center: true,
+        cols: "0.8fr 0.895fr",
       },
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-film.mp4", ratio: "16 / 9" },
+      "/images/chop-chop-bloom/chop-chop-bloom-stationery.jpg",
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-website.mp4", ratio: "1600 / 1108" },
     ],
   },
   {
