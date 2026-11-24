@@ -89,7 +89,7 @@ function GalleryVideo({ src, portrait, ratio, position }) {
   );
 }
 
-function GalleryImage({ src, alt, portrait }) {
+function GalleryImage({ src, alt, portrait, inRow }) {
   const [isLandscape, setIsLandscape] = useState(false);
 
   const checkOrientation = (img) => {
@@ -99,7 +99,7 @@ function GalleryImage({ src, alt, portrait }) {
   };
 
   return (
-    <Reveal y={40} className={isLandscape ? "col-span-2" : undefined}>
+    <Reveal y={40} className={isLandscape && !inRow ? "col-span-2" : undefined}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         ref={(img) => img?.complete && checkOrientation(img)}
@@ -110,6 +110,154 @@ function GalleryImage({ src, alt, portrait }) {
           portrait ? "aspect-[4/5] object-cover" : "h-auto"
         }`}
       />
+    </Reveal>
+  );
+}
+
+// Ein Medium in der Galerie: Bild im Originalformat (mittig, ganz sichtbar)
+// oder Video. Videos laufen nur, solange ihr Slide sichtbar ist, und starten
+// beim Hinblättern von vorn.
+function CarouselSlide({ src, isVideo, active, load, asImage }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (active) {
+      video.currentTime = 0;
+      video.muted = true;
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [active, load]);
+
+  if (!load) return null;
+  if (isVideo && !asImage) {
+    return (
+      <video
+        ref={videoRef}
+        src={src}
+        className="h-full w-full object-cover"
+        muted
+        loop
+        playsInline
+        preload="auto"
+      />
+    );
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt=""
+      draggable={false}
+      className={
+        isVideo
+          ? "h-full w-full object-cover"
+          : "max-h-full max-w-full rounded-2xl object-contain"
+      }
+    />
+  );
+}
+
+function Arrow({ dir, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={dir < 0 ? "Previous" : "Next"}
+      className={`absolute top-1/2 -translate-y-1/2 ${
+        dir < 0 ? "left-3" : "right-3"
+      } z-10 flex h-9 w-9 items-center justify-center rounded-full bg-paper/85 text-ink shadow-sm backdrop-blur transition hover:bg-paper`}
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path
+          d={dir < 0 ? "M8.5 2.5 4 7l4.5 4.5" : "M5.5 2.5 10 7l-4.5 4.5"}
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+}
+
+// Galerie zum Durchklicken: { carousel: [...], ratio: "4 / 5" }. Bilder bleiben
+// in ihrem Format, links und rechts mittig sitzt je ein kleiner Pfeil; auf dem
+// Handy kann man auch wischen.
+function GalleryCarousel({ items, ratio = "4 / 5" }) {
+  const ref = useRef(null);
+  const swipe = useRef(null);
+  const [index, setIndex] = useState(0);
+  const [isNear, setIsNear] = useState(false);
+  const [asImage, setAsImage] = useState(false);
+  const n = items.length;
+  const go = (d) => setIndex((i) => (i + d + n) % n);
+
+  useEffect(() => {
+    setAsImage(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNear(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <Reveal y={40}>
+      <div
+        ref={ref}
+        className="relative select-none overflow-hidden rounded-2xl"
+        style={{ aspectRatio: ratio, touchAction: "pan-y" }}
+        onPointerDown={(e) => (swipe.current = e.clientX)}
+        onPointerUp={(e) => {
+          if (swipe.current == null) return;
+          const dx = e.clientX - swipe.current;
+          swipe.current = null;
+          if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+        }}
+      >
+        <div
+          className="flex h-full transition-transform duration-500 ease-[cubic-bezier(.22,.61,.36,1)]"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {items.map((item, i) => {
+            const src = typeof item === "string" ? item : item.video || item.image;
+            const isVideo = typeof item === "object" && !!item.video;
+            return (
+              <div
+                key={src}
+                className={`flex h-full w-full shrink-0 items-center justify-center ${
+                  isVideo ? "bg-black/5" : ""
+                }`}
+                aria-hidden={i !== index}
+              >
+                <CarouselSlide
+                  src={src}
+                  isVideo={isVideo}
+                  active={i === index}
+                  load={isNear && (isVideo || Math.min((i - index + n) % n, (index - i + n) % n) <= 2)}
+                  asImage={asImage}
+                />
+              </div>
+            );
+          })}
+        </div>
+        {n > 1 && (
+          <>
+            <Arrow dir={-1} onClick={() => go(-1)} />
+            <Arrow dir={1} onClick={() => go(1)} />
+          </>
+        )}
+      </div>
     </Reveal>
   );
 }
@@ -160,7 +308,7 @@ export default function ProjectDetail({ project, next }) {
 
       {/* Gallery */}
       <section className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-2 gap-4 sm:gap-6">
-        {project.gallery.map(function renderItem(item, i) {
+        {project.gallery.map(function renderItem(item, i, inRow) {
           // { row: [...] } zeigt mehrere Hochformate nebeneinander in einer Reihe
           if (item.row) {
             return (
@@ -168,11 +316,22 @@ export default function ProjectDetail({ project, next }) {
                 key={`row-${i}`}
                 className="col-span-2 grid gap-4 sm:gap-6"
                 style={{
-                  gridTemplateColumns: `repeat(${item.row.length}, minmax(0, 1fr))`,
+                  gridTemplateColumns:
+                    item.cols || `repeat(${item.row.length}, minmax(0, 1fr))`,
                 }}
               >
-                {item.row.map(renderItem)}
+                {item.row.map((child, j) => renderItem(child, j, true))}
               </div>
+            );
+          }
+
+          if (item.carousel) {
+            return (
+              <GalleryCarousel
+                key={`carousel-${i}`}
+                items={item.carousel}
+                ratio={item.ratio}
+              />
             );
           }
 
@@ -189,6 +348,7 @@ export default function ProjectDetail({ project, next }) {
               key={`image-${i}`}
               src={item.image || item}
               portrait={item.portrait}
+              inRow={inRow === true}
               alt={`${project.title} — image ${i + 1}`}
             />
           );

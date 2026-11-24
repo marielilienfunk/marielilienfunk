@@ -107,8 +107,46 @@ export const projects = [
     overview:
       "Chop Chop Bloom is an luxurious urban gardening brand, selling high quality secateurs. The idea of the brand is to give gardening a fashionable twist and enhance its fun and playful sides, while being extraordinarily chic doing so.",
     tags: ["Design & Branding", "Photography"],
-    cover:
-      "https://static.wixstatic.com/media/a138c8_50869fc9c53e45999969921c1dda21a8~mv2.jpg/v1/fit/w_960,h_722,q_90/a138c8_50869fc9c53e45999969921c1dda21a8~mv2.jpg",
+    cover: "/images/chop-chop-bloom/chop-chop-bloom-cover.jpg",
+    gallery: [
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-leder-cards.mp4", portrait: true },
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-cards.mp4", portrait: true },
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-garden-shears.mp4", portrait: true, ratio: "1 / 1" },
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-description.mp4", portrait: true, ratio: "1 / 1" },
+      {
+        carousel: [
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-1.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-2.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-3.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-4.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-5.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-6.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-7.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-8.jpg",
+          "/images/chop-chop-bloom/chop-chop-bloom-photo-9.jpg",
+        ],
+        ratio: "4 / 5",
+      },
+      { video: "/images/chop-chop-bloom/chop-chop-bloom-illus.mp4", portrait: true },
+      {
+        row: ["/images/chop-chop-bloom/chop-chop-bloom-stationery.jpg", "/images/chop-chop-bloom/chop-chop-bloom-shears-detail.jpg"],
+        cols: "1.5fr 1.291fr",
+      },
+      {
+        row: [
+          { video: "/images/chop-chop-bloom/chop-chop-bloom-film.mp4", portrait: true, ratio: "16 / 9" },
+          {
+            carousel: [
+              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-1.mp4" },
+              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-2.mp4" },
+              { video: "/images/chop-chop-bloom/chop-chop-bloom-busy-lizzy-3.mp4" },
+            ],
+            ratio: "700 / 782",
+          },
+        ],
+        cols: "1.778fr 0.895fr",
+      },
+    ],
   },
   {
     slug: "irmas-world",
