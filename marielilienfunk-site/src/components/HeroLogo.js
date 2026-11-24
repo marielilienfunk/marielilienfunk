@@ -191,6 +191,10 @@ export default function HeroLogo() {
       const s = scene;
       const vh = window.innerHeight;
       const y = window.scrollY;
+      // fertig angedockt und weiter unten: nichts mehr zu tun (spart Layout-Arbeit beim Scrollen)
+      const parked = y >= vh * (DRAW_SCROLL + DOCK_SCROLL);
+      if (parked && wasParked) return;
+      wasParked = parked;
       const u = reduce ? 1 : clamp01(y / (vh * DRAW_SCROLL));
       const T = u * s.total;
       circles.current.forEach((c) => c && (c.style.opacity = u >= 1 ? "1" : "0"));
@@ -272,6 +276,7 @@ export default function HeroLogo() {
       }
     };
 
+    let wasParked = false;
     scene = build();
     raf = requestAnimationFrame(frame);
 

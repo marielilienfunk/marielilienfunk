@@ -4,6 +4,20 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 
+// true, solange das Element (mit etwas Vorlauf) im Sichtbereich ist
+function useInView(ref, margin = "300px 0px") {
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: margin }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref, margin]);
+  return inView;
+}
+
 function GalleryVideo({ src, portrait, ratio, position }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
@@ -16,32 +30,25 @@ function GalleryVideo({ src, portrait, ratio, position }) {
     setAsImage(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
   }, []);
 
-  // Videos erst kurz vor dem Sichtbereich laden, damit die Seite schnell öffnet.
+  // Videos erst kurz vor dem Sichtbereich laden und nur abspielen, solange sie
+  // zu sehen sind — sonst dekodiert der Browser alle Videos gleichzeitig.
+  const inView = useInView(containerRef);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsNear(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "600px 0px" }
-    );
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
+    if (inView) setIsNear(true);
+  }, [inView]);
 
-  // Autoplay zusätzlich per Code starten. Falls der Browser das blockiert,
-  // startet das Video bei der ersten Berührung der Seite.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
+    if (!inView) {
+      video.pause();
+      return;
+    }
+    // Falls der Browser Autoplay blockiert, startet das Video bei der ersten Berührung.
     const play = () => {
       video.muted = true;
       video.play().catch(() => {});
     };
-
     play();
     document.addEventListener("touchend", play, { passive: true });
     document.addEventListener("click", play);
@@ -49,7 +56,7 @@ function GalleryVideo({ src, portrait, ratio, position }) {
       document.removeEventListener("touchend", play);
       document.removeEventListener("click", play);
     };
-  }, [asImage, isNear]);
+  }, [asImage, isNear, inView]);
 
   const className = "w-full h-full object-cover";
 
@@ -64,6 +71,7 @@ function GalleryVideo({ src, portrait, ratio, position }) {
       >
         {isNear &&
           (asImage ? (
+            inView && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={src}
@@ -72,6 +80,7 @@ function GalleryVideo({ src, portrait, ratio, position }) {
               style={{ objectPosition: position }}
               onError={() => setAsImage(false)}
             />
+            )
           ) : (
             <video
               ref={videoRef}
@@ -106,6 +115,8 @@ function GalleryImage({ src, alt, portrait, inRow }) {
         src={src}
         alt={alt}
         onLoad={(e) => checkOrientation(e.currentTarget)}
+        loading="lazy"
+        decoding="async"
         className={`w-full rounded-2xl ${
           portrait ? "aspect-[4/5] object-cover" : "h-auto"
         }`}
@@ -152,6 +163,7 @@ function CarouselSlide({ src, isVideo, active, load, asImage }) {
       src={src}
       alt=""
       draggable={false}
+      decoding="async"
       className={
         isVideo
           ? "h-full w-full object-cover"
@@ -193,23 +205,16 @@ function GalleryCarousel({ items, ratio = "4 / 5" }) {
   const [index, setIndex] = useState(0);
   const [isNear, setIsNear] = useState(false);
   const [asImage, setAsImage] = useState(false);
+  const inView = useInView(ref);
   const n = items.length;
   const go = (d) => setIndex((i) => (i + d + n) % n);
 
   useEffect(() => {
     setAsImage(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsNear(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "600px 0px" }
-    );
-    observer.observe(ref.current);
-    return () => observer.disconnect();
   }, []);
+  useEffect(() => {
+    if (inView) setIsNear(true);
+  }, [inView]);
 
   return (
     <Reveal y={40}>
@@ -243,8 +248,12 @@ function GalleryCarousel({ items, ratio = "4 / 5" }) {
                 <CarouselSlide
                   src={src}
                   isVideo={isVideo}
-                  active={i === index}
-                  load={isNear && (isVideo || Math.min((i - index + n) % n, (index - i + n) % n) <= 2)}
+                  active={inView && i === index}
+                  load={
+                    isVideo
+                      ? isNear && (!asImage || (inView && i === index))
+                      : isNear && Math.min((i - index + n) % n, (index - i + n) % n) <= 2
+                  }
                   asImage={asImage}
                 />
               </div>

@@ -34,7 +34,7 @@ export const projects = [
     cover: "/images/around-around/around-around-cover.jpg",
     gallery: [
       { video: "/images/around-around/around-around-sketches.mp4", portrait: true },
-      { image: "/images/around-around/around-around-aa-all.png", portrait: true },
+      { image: "/images/around-around/around-around-aa-all.jpg", portrait: true },
       { image: "/images/around-around/around-around-window.jpg", portrait: true },
       { video: "/images/around-around/around-around-socks.mp4", portrait: true },
       "/images/around-around/around-around-poster.jpg",
